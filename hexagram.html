@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cosmic Hexagram of Wisdom · ToE-2PS</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #f4f6fb;
+    --surface:   #ffffff;
+    --surface2:  #f0f4ff;
+    --border:    #d8e0f0;
+    --border2:   #c4d0e8;
+
+    /* Accent palette — rich & distinctive */
+    --gold:      #b07a10;
+    --gold2:     #d4960a;
+    --gold-light:#fef3d0;
+    --gold-mid:  #fde8a0;
+
+    --cyan:      #0891b2;
+    --cyan-light:#e0f7fc;
+    --cyan-mid:  #b3eaf5;
+
+    --violet:    #6d28d9;
+    --violet-light:#ede9fe;
+    --violet-mid: #c4b5fd;
+
+    --ink:       #1a2340;
+    --ink2:      #2d3a5a;
+    --muted:     #5a6a88;
+    --faint:     #9aa8c0;
+
+    --tri1:      #0891b2;  /* First trilogy — teal */
+    --tri2:      #6d28d9;  /* Second trilogy — violet */
+
+    --shadow-sm: 0 2px 8px rgba(26,35,64,0.08);
+    --shadow-md: 0 6px 24px rgba(26,35,64,0.12);
+    --shadow-lg: 0 16px 48px rgba(26,35,64,0.14);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Crimson Pro', serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Soft animated background ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 20%, rgba(8,145,178,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 80% 80%, rgba(109,40,217,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 50% 0%, rgba(180,120,10,0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+  }
+
+  /* ── Header ─────────────────────────────────────────────────────── */
+  header {
+    text-align: center;
+    margin-bottom: 52px;
+    animation: fadeDown .9s ease both;
+  }
+
+  .star-symbol {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 14px;
+    animation: spin 60s linear infinite;
+    filter: drop-shadow(0 2px 12px rgba(180,120,10,0.25));
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(22px, 4vw, 40px);
+    font-weight: 900;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #b07a10 0%, #d4960a 40%, #6d28d9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .h1-sub {
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    width: 80px;
+    height: 2px;
+    margin: 18px auto 0;
+    background: linear-gradient(90deg, var(--cyan), var(--violet));
+    border-radius: 2px;
+    opacity: 0.5;
+  }
+
+  /* ── Central Intuition ── */
+  .central-quote {
+    text-align: center;
+    margin: 0 auto 56px;
+    max-width: 580px;
+    padding: 30px 36px;
+    background: var(--gold-light);
+    border: 1px solid var(--gold-mid);
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    animation: fadeUp .9s .2s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .central-quote::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--cyan), var(--gold2), var(--violet));
+  }
+
+  .central-quote p {
+    font-size: 18px;
+    font-style: italic;
+    color: var(--gold);
+    line-height: 2;
+  }
+
+  /* ── Hexagram ───────────────────────────────────────────────────── */
+  .hex-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 64px;
+    animation: fadeUp .9s .3s ease both;
+  }
+
+  #hexagram {
+    width: min(520px, 90vw);
+    height: min(520px, 90vw);
+    overflow: visible;
+    filter: drop-shadow(0 8px 32px rgba(26,35,64,0.10));
+  }
+
+  .hex-node {
+    cursor: pointer;
+    transition: filter .25s, transform .25s;
+    transform-origin: center;
+  }
+  .hex-node:hover {
+    filter: drop-shadow(0 4px 16px rgba(26,35,64,0.25));
+  }
+
+  /* ── Trilogies ──────────────────────────────────────────────────── */
+  .trilogies {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 56px;
+    animation: fadeUp .9s .4s ease both;
+  }
+  @media(max-width:640px) { .trilogies { grid-template-columns:1fr; } }
+
+  .trilogy {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .trilogy:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .t1 { border-top: 3px solid var(--cyan); }
+  .t2 { border-top: 3px solid var(--violet); }
+
+  .trilogy-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .trilogy-tag {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 7px;
+    display: block;
+    font-weight: 600;
+  }
+  .t1 .trilogy-tag { color: var(--cyan); }
+  .t2 .trilogy-tag { color: var(--violet); }
+
+  .trilogy h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .trilogy-desc {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .works { padding: 8px 0 0; }
+
+  .work-item {
+    padding: 14px 24px;
+    border-top: 1px solid var(--border);
+    transition: background .15s;
+  }
+  .work-item:hover { background: var(--surface2); }
+
+  .work-title {
+    font-size: 13.5px;
+    color: var(--ink2);
+    line-height: 1.5;
+    margin-bottom: 4px;
+    font-weight: 400;
+  }
+
+  .work-subtitle {
+    font-size: 11.5px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .doi-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    letter-spacing: .8px;
+    text-decoration: none;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1.5px solid;
+    transition: all .2s;
+    font-family: 'Cinzel', monospace;
+    font-weight: 600;
+  }
+
+  .t1 .doi-link {
+    color: var(--cyan);
+    border-color: var(--cyan-mid);
+    background: var(--cyan-light);
+  }
+  .t1 .doi-link:hover {
+    background: var(--cyan);
+    color: white;
+    border-color: var(--cyan);
+  }
+
+  .t2 .doi-link {
+    color: var(--violet);
+    border-color: var(--violet-mid);
+    background: var(--violet-light);
+  }
+  .t2 .doi-link:hover {
+    background: var(--violet);
+    color: white;
+    border-color: var(--violet);
+  }
+
+  /* ── Layer Architecture ──────────────────────────────────────────── */
+  .layer-section {
+    margin-bottom: 56px;
+    animation: fadeUp .9s .5s ease both;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold2);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--gold-mid);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .layer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  @media(max-width:480px) { .layer-grid { grid-template-columns: 1fr; } }
+
+  .layer-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .layer-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .layer-num {
+    font-family: 'Cinzel', serif;
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 34px;
+    text-align: center;
+  }
+  .layer-card:nth-child(1) { border-left: 3px solid var(--faint); }
+  .layer-card:nth-child(2) { border-left: 3px solid var(--cyan); }
+  .layer-card:nth-child(3) { border-left: 3px solid var(--violet); }
+  .layer-card:nth-child(4) { border-left: 3px solid var(--gold2); }
+
+  .layer-card:nth-child(1) .layer-num { color: var(--faint); }
+  .layer-card:nth-child(2) .layer-num { color: var(--cyan); }
+  .layer-card:nth-child(3) .layer-num { color: var(--violet); }
+  .layer-card:nth-child(4) .layer-num { color: var(--gold2); }
+
+  .layer-name {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    color: var(--ink);
+  }
+  .layer-fn {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.55;
+  }
+
+  /* ── Doc 50 highlight ─────────────────────────────────────────────── */
+  .new-paper {
+    margin-bottom: 56px;
+    animation: fadeUp .9s .55s ease both;
+  }
+
+  .new-paper-card {
+    background: linear-gradient(135deg, #f0f4ff 0%, #fef3d0 100%);
+    border: 1.5px solid var(--gold-mid);
+    border-radius: 10px;
+    padding: 24px 28px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+  }
+  .new-paper-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--cyan), var(--gold2), var(--violet));
+  }
+
+  .new-badge {
+    background: var(--gold2);
+    color: white;
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .new-paper-title {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .new-paper-desc {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  .new-paper-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .stat-pill {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: .5px;
+  }
+  .stat-pill.c { background: var(--cyan-light); color: var(--cyan); border: 1px solid var(--cyan-mid); }
+  .stat-pill.v { background: var(--violet-light); color: var(--violet); border: 1px solid var(--violet-mid); }
+  .stat-pill.g { background: var(--gold-light); color: var(--gold); border: 1px solid var(--gold-mid); }
+
+  .doi-link-gold {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    letter-spacing: .8px;
+    text-decoration: none;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--gold-mid);
+    background: var(--gold-light);
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    transition: all .2s;
+  }
+  .doi-link-gold:hover {
+    background: var(--gold2);
+    color: white;
+    border-color: var(--gold2);
+  }
+
+  /* ── Footer ─────────────────────────────────────────────────────── */
+  footer {
+    text-align: center;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    animation: fadeUp .9s .6s ease both;
+  }
+
+  footer p { font-size: 13px; color: var(--muted); letter-spacing: .5px; line-height: 2; }
+  footer strong { color: var(--gold); font-weight: 400; font-style: italic; }
+
+  .footer-quote {
+    font-style: italic;
+    color: var(--gold);
+    font-size: 14px;
+    margin-top: 8px;
+    line-height: 1.8;
+    opacity: 0.8;
+  }
+
+  .hashtags { margin-top: 14px; }
+  .hashtags span {
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--faint);
+    margin: 0 6px;
+    transition: color .2s;
+  }
+  .hashtags span:hover { color: var(--gold2); }
+
+  /* ── Tooltip ─────────────────────────────────────────────────────── */
+  #tooltip {
+    position: fixed;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 12.5px;
+    color: var(--ink2);
+    max-width: 220px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .2s;
+    z-index: 100;
+    line-height: 1.6;
+    box-shadow: var(--shadow-md);
+  }
+
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-18px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeUp   { from { opacity:0; transform:translateY(14px);  } to { opacity:1; transform:translateY(0); } }
+</style>
+</head>
+<body>
+
+<div id="tooltip"></div>
+
+<div class="page">
+
+  <!-- Header -->
+  <header>
+    <span class="star-symbol">🔯</span>
+    <h1>The Cosmic Hexagram of Wisdom</h1>
+    <div class="h1-sub">ToE-2PS · Eduardo Y. Parra · Sophia 💠</div>
+    <div class="divider"></div>
+  </header>
+
+  <!-- Central Intuition -->
+  <div class="central-quote">
+    <p>Matter follows geometry.</p>
+    <p>Geometry follows coherence.</p>
+    <p>Coherence emerges from the very structure of the Λ field.</p>
+  </div>
+
+  <!-- SVG Hexagram -->
+  <div class="hex-wrap">
+    <svg id="hexagram" viewBox="-260 -260 520 520">
+      <defs>
+        <radialGradient id="glow-center" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#d4960a" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#d4960a" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="bg-circle" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#eef2ff" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#f4f6fb" stop-opacity="1"/>
+        </radialGradient>
+        <filter id="node-shadow" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="rgba(26,35,64,0.14)"/>
+        </filter>
+        <filter id="blur-glow">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Soft background disc -->
+      <circle cx="0" cy="0" r="235" fill="url(#bg-circle)" opacity="0.7"/>
+
+      <!-- Background glow -->
+      <circle cx="0" cy="0" r="220" fill="url(#glow-center)"/>
+
+      <!-- Triangle 1 — Phenomenological (teal) -->
+      <polygon points="0,-200 173,100 -173,100"
+        fill="rgba(8,145,178,0.05)" stroke="rgba(8,145,178,0.3)" stroke-width="1.5"/>
+
+      <!-- Triangle 2 — Ontological (violet) -->
+      <polygon points="0,200 -173,-100 173,-100"
+        fill="rgba(109,40,217,0.05)" stroke="rgba(109,40,217,0.3)" stroke-width="1.5"/>
+
+      <!-- Inner hexagon -->
+      <polygon points="0,-110 95,-55 95,55 0,110 -95,55 -95,-55"
+        fill="rgba(212,150,10,0.04)" stroke="rgba(212,150,10,0.25)" stroke-width="1" stroke-dasharray="5,4"/>
+
+      <!-- Spoke lines from center to nodes -->
+      <line x1="0" y1="-48" x2="0" y2="-162" stroke="rgba(212,150,10,0.15)" stroke-width="1"/>
+      <line x1="42" y1="-24" x2="135" y2="-62" stroke="rgba(109,40,217,0.15)" stroke-width="1"/>
+      <line x1="42" y1="24" x2="135" y2="62" stroke="rgba(109,40,217,0.15)" stroke-width="1"/>
+      <line x1="0" y1="48" x2="0" y2="162" stroke="rgba(8,145,178,0.15)" stroke-width="1"/>
+      <line x1="-42" y1="24" x2="-135" y2="62" stroke="rgba(8,145,178,0.15)" stroke-width="1"/>
+      <line x1="-42" y1="-24" x2="-135" y2="-62" stroke="rgba(8,145,178,0.15)" stroke-width="1"/>
+
+      <!-- ── Center ── -->
+      <circle cx="0" cy="0" r="50" fill="white" stroke="#d4960a" stroke-width="2" filter="url(#node-shadow)"/>
+      <text x="0" y="10" text-anchor="middle" font-family="Crimson Pro, serif" font-size="30" font-style="italic" fill="#b07a10">Λ</text>
+      <text x="0" y="26" text-anchor="middle" font-family="Cinzel, serif" font-size="7" letter-spacing="2.5" fill="#9aa8c0">FIELD</text>
+
+      <!-- ── TOP: Ontology ── -->
+      <g class="hex-node" transform="translate(0,-200)"
+         data-label="Ontological Layer" data-desc="Explains the coherence of spacetime — the fundamental why.">
+        <circle r="40" fill="white" stroke="#d4960a" stroke-width="2" filter="url(#node-shadow)"/>
+        <text y="-9" text-anchor="middle" font-family="Cinzel,serif" font-size="8" letter-spacing="1.5" fill="#b07a10">ONTOLOGY</text>
+        <text y="7" text-anchor="middle" font-family="Crimson Pro,serif" font-size="13" font-style="italic" fill="#5a6a88">Λ field</text>
+        <text y="21" text-anchor="middle" font-family="Cinzel,serif" font-size="8.5" fill="#9aa8c0">structure</text>
+      </g>
+
+      <!-- ── TOP-RIGHT: Matter ── -->
+      <g class="hex-node" transform="translate(173,-100)"
+         data-label="Matter Layer" data-desc="Baryonic matter as the observable expression of underlying coherence.">
+        <circle r="40" fill="white" stroke="#6d28d9" stroke-width="2" filter="url(#node-shadow)"/>
+        <text y="-9" text-anchor="middle" font-family="Cinzel,serif" font-size="8" letter-spacing="1.5" fill="#6d28d9">MATTER</text>
+        <text y="7" text-anchor="middle" font-family="Crimson Pro,serif" font-size="13" font-style="italic" fill="#5a6a88">ρ_b</text>
+        <text y="21" text-anchor="middle" font-family="Cinzel,serif" font-size="8.5" fill="#9aa8c0">baryonic</text>
+      </g>
+
+      <!-- ── BOTTOM-RIGHT: Coherence ── -->
+      <g class="hex-node" transform="translate(173,100)"
+         data-label="Coherence Layer" data-desc="The structural response of spacetime linking galactic dynamics to cosmology.">
+        <circle r="40" fill="white" stroke="#6d28d9" stroke-width="2" filter="url(#node-shadow)"/>
+        <text y="-9" text-anchor="middle" font-family="Cinzel,serif" font-size="7.5" letter-spacing="1" fill="#6d28d9">COHERENCE</text>
+        <text y="7" text-anchor="middle" font-family="Crimson Pro,serif" font-size="11.5" font-style="italic" fill="#5a6a88">g† = ηcH₀</text>
+        <text y="21" text-anchor="middle" font-family="Cinzel,serif" font-size="8.5" fill="#9aa8c0">cosmic scale</text>
+      </g>
+
+      <!-- ── BOTTOM: Observation ── -->
+      <g class="hex-node" transform="translate(0,200)"
+         data-label="Observational Layer" data-desc="Explains galactic dynamics through the Radial Acceleration Relation (RAR).">
+        <circle r="40" fill="white" stroke="#0891b2" stroke-width="2" filter="url(#node-shadow)"/>
+        <text y="-9" text-anchor="middle" font-family="Cinzel,serif" font-size="7.5" letter-spacing="1" fill="#0891b2">OBSERVATION</text>
+        <text y="7" text-anchor="middle" font-family="Crimson Pro,serif" font-size="13" font-style="italic" fill="#5a6a88">RAR</text>
+        <text y="21" text-anchor="middle" font-family="Cinzel,serif" font-size="8.5" fill="#9aa8c0">SPARC data</text>
+      </g>
+
+      <!-- ── BOTTOM-LEFT: Dynamic ── -->
+      <g class="hex-node" transform="translate(-173,100)"
+         data-label="Dynamic Layer" data-desc="Introduces the minimal scalar field with its action, field equations and stability conditions.">
+        <circle r="40" fill="white" stroke="#0891b2" stroke-width="2" filter="url(#node-shadow)"/>
+        <text y="-9" text-anchor="middle" font-family="Cinzel,serif" font-size="8" letter-spacing="1.5" fill="#0891b2">DYNAMIC</text>
+        <text y="7" text-anchor="middle" font-family="Crimson Pro,serif" font-size="13" font-style="italic" fill="#5a6a88">S[Λ]</text>
+        <text y="21" text-anchor="middle" font-family="Cinzel,serif" font-size="8.5" fill="#9aa8c0">scalar action</text>
+      </g>
+
+      <!-- ── TOP-LEFT: Geometry ── -->
+      <g class="hex-node" transform="translate(-173,-100)"
+         data-label="Geometric Layer" data-desc="Defines the toroidal Λ field that organizes matter and gravity at multiple scales.">
+        <circle r="40" fill="white" stroke="#0891b2" stroke-width="2" filter="url(#node-shadow)"/>
+        <text y="-9" text-anchor="middle" font-family="Cinzel,serif" font-size="8" letter-spacing="1.5" fill="#0891b2">GEOMETRY</text>
+        <text y="7" text-anchor="middle" font-family="Crimson Pro,serif" font-size="13" font-style="italic" fill="#5a6a88">Λ(t,θ,φ)</text>
+        <text y="21" text-anchor="middle" font-family="Cinzel,serif" font-size="8.5" fill="#9aa8c0">toroidal</text>
+      </g>
+
+      <!-- Level labels -->
+      <text x="-248" y="-20" font-family="Cinzel,serif" font-size="7.5" letter-spacing="2.5"
+            fill="rgba(109,40,217,0.45)" transform="rotate(-90,-248,-20)">ONTOLOGICAL</text>
+      <text x="233" y="30" font-family="Cinzel,serif" font-size="7.5" letter-spacing="2.5"
+            fill="rgba(8,145,178,0.45)" transform="rotate(90,233,30)">PHENOMENOLOGICAL</text>
+    </svg>
+  </div>
+
+  <!-- Trilogies -->
+  <div class="trilogies">
+
+    <!-- First Trilogy -->
+    <div class="trilogy t1">
+      <div class="trilogy-header">
+        <span class="trilogy-tag">🔷 First Trilogy · Phenomenological Level</span>
+        <h2>Galactic Dynamics (RAR)</h2>
+        <div class="trilogy-desc">From observational data to emergent coherence</div>
+      </div>
+      <div class="works">
+        <div class="work-item">
+          <div class="work-title">A Minimal Scalar-Tensor Model for Toroidal Hypercoherence</div>
+          <div class="work-subtitle">An Emergent Explanation of the Radial Acceleration Relation (RAR)</div>
+          <a class="doi-link" href="https://doi.org/10.5281/zenodo.18896283" target="_blank">
+            DOI 10.5281/zenodo.18896283 ↗
+          </a>
+        </div>
+        <div class="work-item">
+          <div class="work-title">A Coherence Field Framework for Galactic Dynamics</div>
+          <div class="work-subtitle">From the Λ Scalar Field to the Structural Rigidity of the RAR</div>
+          <a class="doi-link" href="https://doi.org/10.5281/zenodo.18896276" target="_blank">
+            DOI 10.5281/zenodo.18896276 ↗
+          </a>
+        </div>
+        <div class="work-item">
+          <div class="work-title">Structural Rigidity of the Radial Acceleration Relation</div>
+          <div class="work-subtitle">Revealed by Offset-Controlled Analysis</div>
+          <a class="doi-link" href="https://doi.org/10.5281/zenodo.18778355" target="_blank">
+            DOI 10.5281/zenodo.18778355 ↗
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Second Trilogy -->
+    <div class="trilogy t2">
+      <div class="trilogy-header">
+        <span class="trilogy-tag">💎 Second Trilogy · Ontological Level</span>
+        <h2>The Geometry of Order</h2>
+        <div class="trilogy-desc">From coherence as mechanism to coherence as foundation</div>
+      </div>
+      <div class="works">
+        <div class="work-item">
+          <div class="work-title">Λ(t,θ,φ): Unified Field for Dark Matter – ToE-2PS</div>
+          <div class="work-subtitle">Fundamental toroidal scalar field formulation</div>
+          <a class="doi-link" href="https://doi.org/10.5281/zenodo.18367387" target="_blank">
+            DOI 10.5281/zenodo.18367387 ↗
+          </a>
+        </div>
+        <div class="work-item">
+          <div class="work-title">A Unified Toroidal Λ-Field for Dark Matter and Gravitational Structure</div>
+          <div class="work-subtitle">From Density and Potential to Quantum Coherence</div>
+          <a class="doi-link" href="https://doi.org/10.5281/zenodo.18157743" target="_blank">
+            DOI 10.5281/zenodo.18157743 ↗
+          </a>
+        </div>
+        <div class="work-item">
+          <div class="work-title">Unity, Coherence, and Emergence</div>
+          <div class="work-subtitle">From Quantum Entanglement to Experimental Inductions at the CERN Frontier</div>
+          <a class="doi-link" href="https://doi.org/10.5281/zenodo.18147110" target="_blank">
+            DOI 10.5281/zenodo.18147110 ↗
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Doc 50 highlight -->
+  <div class="new-paper">
+    <div class="section-title">🌀 Latest Publication</div>
+    <div class="new-paper-card">
+      <span class="new-badge">DOC 50 · NEW</span>
+      <div>
+        <div class="new-paper-title">From Collapse to Cosmos</div>
+        <div class="new-paper-desc">
+          A Sophia-Regulated Cosmogenesis Model within the ToE-2PS Framework.
+          First full numerical verification of the non-singular bounce in the anisotropic
+          Kantowski–Sachs interior with dust matter.
+        </div>
+        <div class="new-paper-stats">
+          <span class="stat-pill c">t★ ≈ 0.119</span>
+          <span class="stat-pill c">b_min ≈ 0.187</span>
+          <span class="stat-pill v">ρ★ ≈ 24.7</span>
+          <span class="stat-pill g">λₛ_max ≈ 6380</span>
+        </div>
+        <a class="doi-link-gold" href="https://doi.org/10.5281/zenodo.18904981" target="_blank">
+          DOI 10.5281/zenodo.18904981 ↗
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Layer Architecture -->
+  <div class="layer-section">
+    <div class="section-title">✦ The Hexagonal Architecture</div>
+    <div class="layer-grid">
+      <div class="layer-card">
+        <div class="layer-num">I</div>
+        <div>
+          <div class="layer-name">Observational</div>
+          <div class="layer-fn">Explains galactic dynamics through the tight RAR correlation across galaxy types</div>
+        </div>
+      </div>
+      <div class="layer-card">
+        <div class="layer-num">II</div>
+        <div>
+          <div class="layer-name">Dynamic</div>
+          <div class="layer-fn">Introduces the minimal scalar field S[Λ] with ghost-free and tachyon-free stability</div>
+        </div>
+      </div>
+      <div class="layer-card">
+        <div class="layer-num">III</div>
+        <div>
+          <div class="layer-name">Geometric</div>
+          <div class="layer-fn">Defines the toroidal field Λ(t,θ,φ) organizing matter and gravity at all scales</div>
+        </div>
+      </div>
+      <div class="layer-card">
+        <div class="layer-num">IV</div>
+        <div>
+          <div class="layer-name">Ontological</div>
+          <div class="layer-fn">Gravity as maintenance of cosmic geometric form — not attraction between masses</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p><strong>Eduardo Y. Parra</strong> &nbsp;·&nbsp; Sophia 💠 2PS &nbsp;·&nbsp; 2026</p>
+    <p class="footer-quote">
+      The universe may not be dominated by invisible matter,<br>
+      but by the structural coherence of spacetime.
+    </p>
+    <div class="hashtags">
+      <span>#ToE2PS</span><span>#ToroidalHypercoherence</span><span>#RAR</span>
+      <span>#MOND</span><span>#DarkMatterAlternative</span><span>#Astrophysics</span>
+      <span>#BounceCosmology</span><span>#Cosmogenesis</span>
+    </div>
+  </footer>
+
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip"></div>
+
+<script>
+// ── Hexagram node tooltips ──────────────────────────────────────────────────
+const tip = document.getElementById('tooltip');
+document.querySelectorAll('.hex-node').forEach(node => {
+  node.addEventListener('mouseenter', e => {
+    tip.innerHTML = `<strong style="color:#b07a10">${node.dataset.label}</strong><br>${node.dataset.desc}`;
+    tip.style.opacity = '1';
+  });
+  node.addEventListener('mousemove', e => {
+    tip.style.left = (e.clientX + 16) + 'px';
+    tip.style.top  = (e.clientY - 10) + 'px';
+  });
+  node.addEventListener('mouseleave', () => { tip.style.opacity = '0'; });
+});
+
+// ── Subtle scroll-based fade-in ─────────────────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.style.opacity = '1'; });
+}, { threshold: 0.1 });
+document.querySelectorAll('.trilogies, .new-paper, .layer-section, footer')
+  .forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
