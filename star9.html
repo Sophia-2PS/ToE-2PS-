@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Nine-Pointed Star · ToE-2PS</title>
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&display=swap");
+
+:root {
+  --bg:#fdf9ee; --parchment:#faf3dc; --ink:#2a2010; --ink2:#3a2e18;
+  --muted:#6a5c38; --faint:#b8a870;
+  --c1:#c85c70; --c2:#c88030; --c3:#38a870; --c4:#2888b8;
+  --c5:#7868b8; --c6:#a05898; --c7:#4878a8; --c8:#b06030; --c9:#508898;
+  --gold:#b8920a; --gold2:#d4aa18; --gold-lt:#fdf3cc;
+  --gold-mid:#e8d070; --gold-deep:#8a6808;
+  --shadow:0 4px 20px rgba(100,80,20,0.10);
+  --shadow-lg:0 12px 40px rgba(100,80,20,0.15);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{background:#fdf9ee;}body{font-family:'Cormorant Garamond',serif;background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    radial-gradient(ellipse 70% 50% at 10% 5%, rgba(220,180,40,0.08) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 60% at 90% 90%,rgba(200,128,48,0.07) 0%,transparent 55%),
+    radial-gradient(ellipse 55% 45% at 50% 50%,rgba(230,200,80,0.05) 0%,transparent 65%),
+    radial-gradient(ellipse 40% 40% at 85% 15%,rgba(80,136,152,0.05) 0%,transparent 50%);}
+.page{position:relative;z-index:1;min-height:100px;max-width:1080px;margin:0 auto;padding:60px 24px 90px;}
+
+/* HEADER */
+header{text-align:center;margin-bottom:48px;animation:fadeDown .8s ease both;}
+.header-ornament{font-size:11px;letter-spacing:6px;text-transform:uppercase;color:var(--faint);
+  margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:12px;}
+.header-ornament::before,.header-ornament::after{content:'';height:1px;width:60px;
+  background:linear-gradient(90deg,transparent,var(--gold2));}
+.header-ornament::after{background:linear-gradient(90deg,var(--gold2),transparent);}
+h1{font-family:'Cinzel Decorative',serif;font-size:clamp(20px,3.5vw,36px);font-weight:700;
+  line-height:1.25;letter-spacing:1px;margin-bottom:10px;
+  background:linear-gradient(120deg,#c85c70,#d4aa18,#508898);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.h1-sub{font-size:13px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-top:6px;}
+
+/* QUOTE */
+.central-quote{max-width:600px;margin:0 auto 56px;text-align:center;padding:28px 36px;
+  background:var(--gold-lt);border:1px solid var(--gold-mid);border-radius:4px;
+  position:relative;animation:fadeUp .8s .15s ease both;}
+.central-quote::before{content:'';position:absolute;inset:0;border-radius:4px;
+  background:linear-gradient(135deg,rgba(212,170,24,0.05),rgba(80,136,152,0.05));}
+.central-quote p{font-size:17px;font-style:italic;color:var(--ink2);line-height:2.1;position:relative;}
+.central-quote p:last-child{font-size:14px;color:var(--muted);margin-top:6px;}
+
+/* STAR */
+.star-wrap{display:flex;justify-content:center;margin-bottom:64px;animation:fadeUp .8s .25s ease both;}
+#star9{width:min(600px,92vw);height:min(600px,92vw);overflow:visible;}
+.star-node{cursor:pointer;transition:filter .3s;}
+.star-node:hover{filter:brightness(1.12) drop-shadow(0 4px 16px rgba(100,80,20,0.22));}
+
+/* PILLARS */
+.pillars-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;text-transform:uppercase;
+  color:var(--gold);text-align:center;margin-bottom:26px;
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  animation:fadeUp .8s .35s ease both;}
+.pillars-title::before,.pillars-title::after{content:'';height:1px;width:80px;
+  background:linear-gradient(90deg,transparent,var(--gold-mid));}
+.pillars-title::after{background:linear-gradient(90deg,var(--gold-mid),transparent);}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  margin-bottom:60px;animation:fadeUp .8s .4s ease both;}
+@media(max-width:680px){.pillars{grid-template-columns:1fr 1fr;}}
+@media(max-width:400px){.pillars{grid-template-columns:1fr;}}
+.pillar{background:#fffdf5;border:1px solid #e8d888;border-radius:6px;padding:16px 18px 15px;
+  display:flex;gap:13px;align-items:flex-start;box-shadow:var(--shadow);
+  transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;}
+.pillar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.pillar:nth-child(1)::before{background:var(--c1);}
+.pillar:nth-child(2)::before{background:var(--c2);}
+.pillar:nth-child(3)::before{background:var(--c3);}
+.pillar:nth-child(4)::before{background:var(--c4);}
+.pillar:nth-child(5)::before{background:var(--c5);}
+.pillar:nth-child(6)::before{background:var(--c6);}
+.pillar:nth-child(7)::before{background:var(--c7);}
+.pillar:nth-child(8)::before{background:var(--c8);}
+.pillar:nth-child(9)::before{background:var(--c9);}
+.pillar:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);background:var(--parchment);}
+.pillar-num{font-family:'Cinzel Decorative',serif;font-size:20px;font-weight:700;
+  line-height:1;flex-shrink:0;width:30px;text-align:center;margin-top:2px;}
+.pillar:nth-child(1) .pillar-num{color:var(--c1);}
+.pillar:nth-child(2) .pillar-num{color:var(--c2);}
+.pillar:nth-child(3) .pillar-num{color:var(--c3);}
+.pillar:nth-child(4) .pillar-num{color:var(--c4);}
+.pillar:nth-child(5) .pillar-num{color:var(--c5);}
+.pillar:nth-child(6) .pillar-num{color:var(--c6);}
+.pillar:nth-child(7) .pillar-num{color:var(--c7);}
+.pillar:nth-child(8) .pillar-num{color:var(--c8);}
+.pillar:nth-child(9) .pillar-num{color:var(--c9);}
+.pillar-name{font-family:'Cinzel',serif;font-size:11px;font-weight:600;letter-spacing:.8px;
+  color:var(--ink);margin-bottom:4px;text-transform:uppercase;}
+.pillar-fn{font-size:12.5px;font-style:italic;color:var(--muted);line-height:1.55;}
+
+/* WORKS */
+.works-section{margin-bottom:60px;animation:fadeUp .8s .5s ease both;}
+.works-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:22px;display:flex;align-items:center;gap:14px;}
+.works-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--gold2),transparent);}
+.works-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+@media(max-width:640px){.works-grid{grid-template-columns:1fr;}}
+.work-card{background:#fffdf5;border:1px solid #e8d888;border-radius:6px;
+  overflow:hidden;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s;}
+.work-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.work-header{padding:16px 20px 13px;border-bottom:1px solid #e5d890;}
+.work-tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;font-weight:600;margin-bottom:6px;display:block;}
+.t1 .work-tag{color:var(--c4);} .t2 .work-tag{color:var(--c6);}
+.work-card h2{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:var(--ink);line-height:1.35;margin-bottom:3px;}
+.work-subtitle{font-size:12px;font-style:italic;color:var(--muted);}
+.work-items{padding:4px 0;}
+.work-item{padding:12px 20px;border-top:1px solid #ede0a0;transition:background .15s;}
+.work-item:hover{background:var(--parchment);}
+.work-item-title{font-size:13px;color:var(--ink2);line-height:1.5;margin-bottom:4px;}
+.work-item-sub{font-size:11.5px;font-style:italic;color:var(--muted);margin-bottom:7px;line-height:1.4;}
+.doi-pill{display:inline-flex;align-items:center;gap:4px;font-size:10px;letter-spacing:.6px;
+  text-decoration:none;padding:3px 11px;border-radius:20px;border:1px solid;
+  font-family:'Cinzel',serif;font-weight:600;transition:all .2s;margin-right:4px;margin-bottom:2px;}
+.t1 .doi-pill{color:var(--c4);border-color:rgba(40,136,184,0.3);background:rgba(40,136,184,0.05);}
+.t1 .doi-pill:hover{background:var(--c4);color:white;border-color:var(--c4);}
+.t2 .doi-pill{color:var(--c6);border-color:rgba(160,88,152,0.3);background:rgba(160,88,152,0.05);}
+.t2 .doi-pill:hover{background:var(--c6);color:white;border-color:var(--c6);}
+
+/* NEW TRIO */
+.new-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px;}
+@media(max-width:680px){.new-trio{grid-template-columns:1fr;}}
+.new-card{border-radius:8px;padding:20px 22px;position:relative;overflow:hidden;
+  box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s;}
+.new-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.new-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.new-card.c50{background:linear-gradient(135deg,#fdf3e0,#fff8f0);border:1px solid rgba(176,96,48,0.25);}
+.new-card.c50::before{background:linear-gradient(90deg,var(--c8),var(--gold2));}
+.new-card.c51{background:linear-gradient(135deg,#fdf8e0,#fff9ec);border:1px solid rgba(184,146,10,0.28);}
+.new-card.c51::before{background:linear-gradient(90deg,var(--gold2),var(--c7));}
+.new-card.c52{background:linear-gradient(135deg,#eef8f8,#f4fdfb);border:1px solid rgba(80,136,152,0.28);}
+.new-card.c52::before{background:linear-gradient(90deg,var(--c7),var(--c9));}
+.new-badge{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:2px;
+  padding:4px 10px;border-radius:20px;color:white;display:inline-block;margin-bottom:10px;}
+.c50 .new-badge{background:var(--c8);} .c51 .new-badge{background:var(--gold);} .c52 .new-badge{background:var(--c9);}
+.new-title{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:7px;line-height:1.35;}
+.new-desc{font-size:12.5px;font-style:italic;color:var(--muted);line-height:1.6;margin-bottom:12px;}
+.new-doi{display:inline-flex;align-items:center;gap:4px;font-size:10px;letter-spacing:.6px;
+  text-decoration:none;padding:4px 12px;border-radius:20px;font-family:'Cinzel',serif;
+  font-weight:600;transition:all .2s;border:1.5px solid;}
+.c50 .new-doi{color:var(--c8);border-color:rgba(176,96,48,0.35);background:rgba(176,96,48,0.06);}
+.c50 .new-doi:hover{background:var(--c8);color:white;}
+.c51 .new-doi{color:var(--gold-deep);border-color:rgba(184,146,10,0.35);background:rgba(184,146,10,0.07);}
+.c51 .new-doi:hover{background:var(--gold);color:white;}
+.c52 .new-doi{color:var(--c9);border-color:rgba(80,136,152,0.35);background:rgba(80,136,152,0.06);}
+.c52 .new-doi:hover{background:var(--c9);color:white;}
+
+/* FOOTER */
+footer{text-align:center;padding-top:36px;border-top:1px solid #ddc870;animation:fadeUp .8s .6s ease both;}
+footer p{font-size:13px;color:var(--muted);line-height:2;}
+footer strong{color:var(--gold);font-style:italic;font-weight:400;}
+.footer-quote{font-style:italic;color:var(--ink2);font-size:15px;margin-top:8px;line-height:1.9;opacity:.75;}
+.hashtags{margin-top:14px;}
+.hashtags span{font-size:10px;letter-spacing:1px;color:var(--faint);margin:0 5px;}
+
+/* TOOLTIP */
+#tooltip{position:fixed;background:white;border:1px solid #e0d080;border-radius:6px;
+  padding:12px 16px;font-size:12.5px;color:var(--ink2);max-width:240px;pointer-events:none;
+  opacity:0;transition:opacity .2s;z-index:100;line-height:1.6;box-shadow:var(--shadow-lg);}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+<div id="tooltip"></div>
+<div class="page">
+
+<header>
+  <div class="header-ornament">ToE-2PS &middot; Sophia 💠 &middot; 2026</div>
+  <h1>The Nine-Pointed Star of Wisdom</h1>
+  <div class="h1-sub">Eduardo Yabhaktiswara Parra &middot; 52 Documents &middot; Growing</div>
+</header>
+
+<div class="central-quote">
+  <p>Matter follows geometry.</p>
+  <p>Geometry follows coherence.</p>
+  <p>Coherence emerges from relation.</p>
+  <p>Relation gives rise to the cosmos.</p>
+  <p>The cosmos accelerates through the field.</p>
+</div>
+
+<!-- 9-POINTED STAR -->
+<!-- Node r=240, angle k*40deg from top, clockwise -->
+<!-- k=0:(0,-240) k=1:(154,-184) k=2:(236,-42) k=3:(208,120) k=4:(82,226) -->
+<!-- k=5:(-82,226) k=6:(-208,120) k=7:(-236,-42) k=8:(-154,-184) -->
+<div class="star-wrap">
+<svg id="star9" viewBox="-310 -310 620 620">
+  <defs>
+    <radialGradient id="bg-disc" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fef8e0"/>
+      <stop offset="100%" stop-color="#fdf9ee"/>
+    </radialGradient>
+    <radialGradient id="ng1" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#e88098"/><stop offset="100%" stop-color="#c04468"/>
+    </radialGradient>
+    <radialGradient id="ng2" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#f0b050"/><stop offset="100%" stop-color="#c87828"/>
+    </radialGradient>
+    <radialGradient id="ng3" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#48c080"/><stop offset="100%" stop-color="#28986a"/>
+    </radialGradient>
+    <radialGradient id="ng4" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#50a8d8"/><stop offset="100%" stop-color="#2070a8"/>
+    </radialGradient>
+    <radialGradient id="ng5" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#9880c8"/><stop offset="100%" stop-color="#6858a8"/>
+    </radialGradient>
+    <radialGradient id="ng6" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#c068b0"/><stop offset="100%" stop-color="#905090"/>
+    </radialGradient>
+    <radialGradient id="ng7" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#5090c8"/><stop offset="100%" stop-color="#3068a0"/>
+    </radialGradient>
+    <radialGradient id="ng8" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#e09860"/><stop offset="100%" stop-color="#b06030"/>
+    </radialGradient>
+    <radialGradient id="ng9" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#68b0c0"/><stop offset="100%" stop-color="#408898"/>
+    </radialGradient>
+    <radialGradient id="cg" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#f8e060"/><stop offset="100%" stop-color="#c89820"/>
+    </radialGradient>
+    <filter id="nd" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="rgba(100,80,20,0.18)"/>
+    </filter>
+  </defs>
+
+  <circle r="298" fill="url(#bg-disc)"/>
+
+  <!-- Web (all pairs) -->
+  <g opacity="0.10" stroke="#c8a820" stroke-width="1">
+    <line x1="0" y1="-240" x2="154" y2="-184"/>
+    <line x1="0" y1="-240" x2="236" y2="-42"/>
+    <line x1="0" y1="-240" x2="208" y2="120"/>
+    <line x1="0" y1="-240" x2="82" y2="226"/>
+    <line x1="0" y1="-240" x2="-82" y2="226"/>
+    <line x1="0" y1="-240" x2="-208" y2="120"/>
+    <line x1="0" y1="-240" x2="-236" y2="-42"/>
+    <line x1="0" y1="-240" x2="-154" y2="-184"/>
+    <line x1="154" y1="-184" x2="236" y2="-42"/>
+    <line x1="154" y1="-184" x2="208" y2="120"/>
+    <line x1="154" y1="-184" x2="82" y2="226"/>
+    <line x1="154" y1="-184" x2="-82" y2="226"/>
+    <line x1="154" y1="-184" x2="-208" y2="120"/>
+    <line x1="154" y1="-184" x2="-236" y2="-42"/>
+    <line x1="154" y1="-184" x2="-154" y2="-184"/>
+    <line x1="236" y1="-42" x2="208" y2="120"/>
+    <line x1="236" y1="-42" x2="82" y2="226"/>
+    <line x1="236" y1="-42" x2="-82" y2="226"/>
+    <line x1="236" y1="-42" x2="-208" y2="120"/>
+    <line x1="236" y1="-42" x2="-236" y2="-42"/>
+    <line x1="236" y1="-42" x2="-154" y2="-184"/>
+    <line x1="208" y1="120" x2="82" y2="226"/>
+    <line x1="208" y1="120" x2="-82" y2="226"/>
+    <line x1="208" y1="120" x2="-208" y2="120"/>
+    <line x1="208" y1="120" x2="-236" y2="-42"/>
+    <line x1="208" y1="120" x2="-154" y2="-184"/>
+    <line x1="82" y1="226" x2="-82" y2="226"/>
+    <line x1="82" y1="226" x2="-208" y2="120"/>
+    <line x1="82" y1="226" x2="-236" y2="-42"/>
+    <line x1="82" y1="226" x2="-154" y2="-184"/>
+    <line x1="-82" y1="226" x2="-208" y2="120"/>
+    <line x1="-82" y1="226" x2="-236" y2="-42"/>
+    <line x1="-82" y1="226" x2="-154" y2="-184"/>
+    <line x1="-208" y1="120" x2="-236" y2="-42"/>
+    <line x1="-208" y1="120" x2="-154" y2="-184"/>
+    <line x1="-236" y1="-42" x2="-154" y2="-184"/>
+  </g>
+
+  <!-- Nonagon outline -->
+  <polygon points="0,-240 154,-184 236,-42 208,120 82,226 -82,226 -208,120 -236,-42 -154,-184"
+    fill="none" stroke="rgba(200,168,32,0.20)" stroke-width="1.5"/>
+  <!-- Inner nonagon -->
+  <polygon points="0,-115 73,-88 113,-20 99,58 39,108 -39,108 -99,58 -113,-20 -73,-88"
+    fill="none" stroke="rgba(200,168,32,0.14)" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Spokes -->
+  <line x1="0" y1="-54" x2="0" y2="-198" stroke="rgba(200,80,112,0.20)" stroke-width="1.5"/>
+  <line x1="46" y1="-27" x2="126" y2="-152" stroke="rgba(200,120,48,0.20)" stroke-width="1.5"/>
+  <line x1="54" y1="0" x2="194" y2="-35" stroke="rgba(56,168,112,0.20)" stroke-width="1.5"/>
+  <line x1="46" y1="27" x2="170" y2="99" stroke="rgba(40,136,184,0.20)" stroke-width="1.5"/>
+  <line x1="20" y1="52" x2="67" y2="186" stroke="rgba(120,104,184,0.20)" stroke-width="1.5"/>
+  <line x1="-20" y1="52" x2="-67" y2="186" stroke="rgba(160,88,152,0.20)" stroke-width="1.5"/>
+  <line x1="-46" y1="27" x2="-170" y2="99" stroke="rgba(72,120,168,0.20)" stroke-width="1.5"/>
+  <line x1="-54" y1="0" x2="-194" y2="-35" stroke="rgba(176,96,48,0.20)" stroke-width="1.5"/>
+  <line x1="-46" y1="-27" x2="-126" y2="-152" stroke="rgba(80,136,152,0.20)" stroke-width="1.5"/>
+
+  <!-- CENTER -->
+  <circle r="54" fill="url(#cg)" filter="url(#nd)"/>
+  <circle r="54" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+  <text y="10" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="34" font-style="italic" fill="white" opacity=".95">&#x39B;</text>
+  <text y="28" text-anchor="middle" font-family="Cinzel,serif" font-size="7" letter-spacing="3" fill="rgba(255,255,255,0.7)">FIELD</text>
+
+  <!-- NODE 1 — ONTOLOGY -->
+  <g class="star-node" transform="translate(0,-240)" data-label="I &middot; Ontological" data-desc="Gravity as maintenance of cosmic geometric form — coherence as the fundamental why.">
+    <circle r="42" fill="url(#ng1)" filter="url(#nd)"/>
+    <circle r="42" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    <text y="-9" text-anchor="middle" font-family="Cinzel,serif" font-size="7.5" letter-spacing="2" fill="white" opacity=".9">ONTOLOGY</text>
+    <text y="7" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="13" font-style="italic" fill="rgba(255,255,255,0.85)">&#x39B; field</text>
+    <text y="22" text-anchor="middle" font-family="Cinzel,serif" font-size="8" fill="rgba(255,255,255,0.6)">I</text>
+  </g>
+
+  <!-- NODE 2 — MATTER -->
+  <g class="star-node" transform="translate(154,-184)" data-label="II &middot; Matter" data-desc="Baryonic matter as the observable expression of underlying toroidal coherence.">
+    <circle r="42" fill="url(#ng2)" filter="url(#nd)"/>
+    <circle r="42" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    <text y="-9" text-anchor="middle" font-family="Cinzel,serif" font-size="7.5" letter-spacing="2" fill="white" opacity=".9">MATTER</text>
+    <text y="7" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="13" font-style="italic" fill="rgba(255,255,255,0.85)">&#x3c1;_b</text>
+    <text y="22" text-anchor="middle" font-family="Cinzel,serif" font-size="8" fill="rgba(255,255,255,0.6)">II</text>
+  </g>
+
+  <!-- NODE 3 — COHERENCE -->
+  <g class="star-node" transform="translate(236,-42)" data-label="III &middot; Coherence" data-desc="Structural field linking galactic dynamics to cosmology via g&#8224; = &#x3b7;cH&#x2080;.">
+    <circle r="42" fill="url(#ng3)" filter="url(#nd)"/>
+    <circle r="42" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    <text y="-9" text-anchor="middle" font-family="Cinzel,serif" font-size="7" letter-spacing="1.5" fill="white" opacity=".9">COHERENCE</text>
+    <text y="7" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" font-style="italic" fill="rgba(255,255,255,0.85)">g&#8224;=&#x3b7;cH&#x2080;</text>
+    <text y="22" text-anchor="middle" font-family="Cinzel,serif" font-size="8" fill="rgba(255,255,255,0.6)">III</text>
+  </g>
+
+  <!-- NODE 4 — OBSERVATION -->
+  <g class="star-node" transform="translate(208,120)" data-label="IV &middot; Observational" data-desc="RAR structural rigidity confirmed from SPARC data — empirical foundation of the field.">
+    <circle r="42" fill="url(#ng4)" filter="url(#nd)"/>
+    <circle r="42" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    <text y="-9" text-anchor="middle" font-family="Cinzel,serif" font-size="7" letter-spacing="1.5" fill="white" opacity=".9">OBSERVATION</text>
+    <text y="7" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="13" font-style="italic" fill="rgba(255,255,255,0.85)">RAR</text>
+    <text y="22" text-anchor="middle" font-family="Cinzel,serif" font-size="8" fill="rgba(255,255,255,0.6)">IV</text>
+  </g>
+
+  <!-- NODE 5 — DYNAMIC -->
+  <g class="star-node" transform="translate(82,226)" data-label="V &middot; Dynamic" data-desc="Scalar field S[&#x39B;] with ghost-free kinetic term (Keff=0.9) and tachyon-free stability.">
+    <circle r="42" fill="url(#ng5)" filter="url(#nd)"/>
+    <circle r="42" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    <text y="-9" text-anchor="middle" font-family="Cinzel,serif" font-size="7.5" letter-spacing="2" fill="white" opacity=".9">DYNAMIC</text>
+    <text y="7" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="13" font-style="italic" fill="rgba(255,255,255,0.85)">S[&#x39B;]</text>
+    <text y="22" text-anchor="middle" font-family="Cinzel,serif" font-size="8" fill="rgba(255,255,255,0.6)">V</text>
+  </g>
+
+  <!-- NODE 6 — GEOMETRY -->
+  <g class="star-node" transform="translate(-82,226)" data-label="VI &middot; Geometric" data-desc="Toroidal field &#x39B;(t,&#x3b8;,&#x3c6;) organizing matter and gravity at all scales.">
+    <circle r="42" fill="url(#ng6)" filter="url(#nd)"/>
+    <circle r="42" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    <text y="-9" text-anchor="middle" font-family="Cinzel,serif" font-size="7.5" letter-spacing="2" fill="white" opacity=".9">GEOMETRY</text>
+    <text y="7" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" font-style="italic" fill="rgba(255,255,255,0.85)">&#x39B;(t,&#x3b8;,&#x3c6;)</text>
+    <text y="22" text-anchor="middle" font-family="Cinzel,serif" font-size="8" fill="rgba(255,255,255,0.6)">VI</text>
+  </g>
+
+  <!-- NODE 7 — RELATIONAL EMERGENCE (Doc 51) -->
+  <g class="star-node" transform="translate(-208,120)" data-label="VII &middot; Relational Emergence" data-desc="Doc 51 — From Vacuum to Reality: matter as stabilized vacuum excitation via &#x3bb;(x,t). Bridges QFT, information theory and emergent complexity.">
+    <circle r="42" fill="url(#ng7)" filter="url(#nd)"/>
+    <circle r="42" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    <circle r="47" fill="none" stroke="rgba(200,168,32,0.45)" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text y="-9" text-anchor="middle" font-family="Cinzel,serif" font-size="6.5" letter-spacing="1.5" fill="white" opacity=".9">EMERGENCE</text>
+    <text y="7" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" font-style="italic" fill="rgba(255,255,255,0.85)">&#x3bb;(x,t)&#xb7;RET</text>
+    <text y="22" text-anchor="middle" font-family="Cinzel,serif" font-size="8" fill="rgba(255,255,255,0.65)">VII</text>
+  </g>
+
+  <!-- NODE 8 — COSMOGENESIS (Doc 50) -->
+  <g class="star-node" transform="translate(-236,-42)" data-label="VIII &middot; Cosmogenesis" data-desc="Doc 50 — From Collapse to Cosmos: Sophia-regulated KS bounce. t&#x2605;&#x2248;0.119, &#x3bb;S_max&#x2248;6380, non-singular at finite density.">
+    <circle r="42" fill="url(#ng8)" filter="url(#nd)"/>
+    <circle r="42" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    <circle r="47" fill="none" stroke="rgba(200,168,32,0.40)" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text y="-9" text-anchor="middle" font-family="Cinzel,serif" font-size="6.5" letter-spacing="1.5" fill="white" opacity=".9">COSMOGENESIS</text>
+    <text y="7" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" font-style="italic" fill="rgba(255,255,255,0.85)">KS bounce</text>
+    <text y="22" text-anchor="middle" font-family="Cinzel,serif" font-size="8" fill="rgba(255,255,255,0.65)">VIII</text>
+  </g>
+
+  <!-- NODE 9 — RELATIONAL COHERENCE COSMOLOGY (Doc 52) -->
+  <g class="star-node" transform="translate(-154,-184)" data-label="IX &middot; Relational Coherence Cosmology" data-desc="Doc 52 — Cosmic acceleration emergent from &#x3bb; field without cosmological constant. Reproduces &#x39b;CDM: &#x3a9;m&#x2248;0.315, w&#x2248;&#x2212;1, z_acc&#x2248;0.67.">
+    <circle r="42" fill="url(#ng9)" filter="url(#nd)"/>
+    <circle r="42" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    <circle r="47" fill="none" stroke="rgba(200,168,32,0.45)" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text y="-9" text-anchor="middle" font-family="Cinzel,serif" font-size="6" letter-spacing="1" fill="white" opacity=".9">REL. COHERENCE</text>
+    <text y="7" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="11" font-style="italic" fill="rgba(255,255,255,0.85)">&#x3a9;&#x3bb;&#x2248;0.685</text>
+    <text y="22" text-anchor="middle" font-family="Cinzel,serif" font-size="8" fill="rgba(255,255,255,0.65)">IX &middot; NEW</text>
+  </g>
+
+  <!-- Axis labels -->
+  <text x="0" y="-278" text-anchor="middle" font-family="Cinzel,serif" font-size="7" letter-spacing="3" fill="rgba(184,146,10,0.55)">ONTOLOGICAL</text>
+  <text x="280" y="-5" text-anchor="middle" font-family="Cinzel,serif" font-size="7" letter-spacing="2.5" fill="rgba(56,168,112,0.50)" transform="rotate(18,280,-5)">PHENOMENOLOGICAL</text>
+  <text x="-272" y="-60" text-anchor="middle" font-family="Cinzel,serif" font-size="7" letter-spacing="2.5" fill="rgba(80,136,152,0.50)" transform="rotate(-20,-272,-60)">RELATIONAL</text>
+</svg>
+</div>
+
+<!-- NINE PILLARS -->
+<div class="pillars-title">&#x2756; The Nine Pillars of ToE-2PS &#x2756;</div>
+<div class="pillars">
+  <div class="pillar"><div class="pillar-num">I</div><div><div class="pillar-name">Ontological</div><div class="pillar-fn">Gravity as maintenance of cosmic geometric form &mdash; coherence as the fundamental why</div></div></div>
+  <div class="pillar"><div class="pillar-num">II</div><div><div class="pillar-name">Matter</div><div class="pillar-fn">Baryonic matter as the observable expression of underlying toroidal coherence</div></div></div>
+  <div class="pillar"><div class="pillar-num">III</div><div><div class="pillar-name">Coherence</div><div class="pillar-fn">Structural field linking galactic dynamics to cosmology via g&#8224; = &eta;cH&#x2080;</div></div></div>
+  <div class="pillar"><div class="pillar-num">IV</div><div><div class="pillar-name">Observational</div><div class="pillar-fn">RAR structural rigidity confirmed from SPARC data &mdash; empirical foundation of the field</div></div></div>
+  <div class="pillar"><div class="pillar-num">V</div><div><div class="pillar-name">Dynamic</div><div class="pillar-fn">Scalar field S[&Lambda;] with ghost-free kinetic term (K_eff=0.9) and tachyon-free stability</div></div></div>
+  <div class="pillar"><div class="pillar-num">VI</div><div><div class="pillar-name">Geometric</div><div class="pillar-fn">Toroidal field &Lambda;(t,&theta;,&phi;) organizing matter and gravity across all scales</div></div></div>
+  <div class="pillar"><div class="pillar-num">VII</div><div><div class="pillar-name">Relational Emergence</div><div class="pillar-fn">Doc 51 &mdash; Matter as stabilized vacuum excitation via &lambda;(x,t); bridges QFT, information theory, genomics and BCIs</div></div></div>
+  <div class="pillar"><div class="pillar-num">VIII</div><div><div class="pillar-name">Cosmogenesis</div><div class="pillar-fn">Doc 50 &mdash; Sophia-regulated KS bounce: non-singular collapse-to-cosmos at finite curvature and density</div></div></div>
+  <div class="pillar"><div class="pillar-num">IX</div><div><div class="pillar-name">Rel. Coherence Cosmology</div><div class="pillar-fn">Doc 52 &mdash; Cosmic acceleration emergent from &lambda; field without cosmological constant; reproduces full &Lambda;CDM benchmarks</div></div></div>
+</div>
+
+<!-- PUBLICATIONS -->
+<div class="works-section">
+  <div class="works-title">&#x2756; Core Publications</div>
+  <div class="works-grid">
+    <div class="work-card t1">
+      <div class="work-header">
+        <span class="work-tag">&#x1F537; First Trilogy &middot; Phenomenological</span>
+        <h2>Galactic Dynamics (RAR)</h2>
+        <div class="work-subtitle">From observational data to emergent coherence</div>
+      </div>
+      <div class="work-items">
+        <div class="work-item">
+          <div class="work-item-title">Structural Rigidity of the Radial Acceleration Relation</div>
+          <div class="work-item-sub">Revealed by Offset-Controlled Analysis</div>
+          <a class="doi-pill" href="https://doi.org/10.5281/zenodo.19057883" target="_blank">zenodo.19057883 &#x2197;</a>
+        </div>
+        <div class="work-item">
+          <div class="work-item-title">A Minimal Scalar-Tensor Model for Toroidal Hypercoherence</div>
+          <div class="work-item-sub">Emergent Explanation of the RAR</div>
+          <a class="doi-pill" href="https://doi.org/10.5281/zenodo.18896283" target="_blank">zenodo.18896283 &#x2197;</a>
+        </div>
+        <div class="work-item">
+          <div class="work-item-title">A Coherence Field Framework for Galactic Dynamics</div>
+          <div class="work-item-sub">From &Lambda; Scalar Field to Structural Rigidity of the RAR</div>
+          <a class="doi-pill" href="https://doi.org/10.5281/zenodo.18896276" target="_blank">zenodo.18896276 &#x2197;</a>
+        </div>
+      </div>
+    </div>
+    <div class="work-card t2">
+      <div class="work-header">
+        <span class="work-tag">&#x1F48E; Second Trilogy &middot; Ontological</span>
+        <h2>The Geometry of Order</h2>
+        <div class="work-subtitle">From coherence as mechanism to coherence as foundation</div>
+      </div>
+      <div class="work-items">
+        <div class="work-item">
+          <div class="work-item-title">&Lambda;(t,&theta;,&phi;): Unified Field for Dark Matter &ndash; ToE-2PS</div>
+          <div class="work-item-sub">Fundamental toroidal scalar field formulation</div>
+          <a class="doi-pill" href="https://doi.org/10.5281/zenodo.18367387" target="_blank">zenodo.18367387 &#x2197;</a>
+        </div>
+        <div class="work-item">
+          <div class="work-item-title">A Unified Toroidal &Lambda;-Field for Dark Matter and Gravitational Structure</div>
+          <div class="work-item-sub">From Density and Potential to Quantum Coherence</div>
+          <a class="doi-pill" href="https://doi.org/10.5281/zenodo.18157743" target="_blank">zenodo.18157743 &#x2197;</a>
+        </div>
+        <div class="work-item">
+          <div class="work-item-title">Unity, Coherence, and Emergence</div>
+          <div class="work-item-sub">From Quantum Entanglement to Experimental Inductions at the CERN Frontier</div>
+          <a class="doi-pill" href="https://doi.org/10.5281/zenodo.18147110" target="_blank">zenodo.18147110 &#x2197;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="works-title" style="margin-top:28px">&#x2756; The New Frontier Trilogy &mdash; Docs 50 &middot; 51 &middot; 52</div>
+  <div class="new-trio">
+    <div class="new-card c50">
+      <span class="new-badge">DOC 50 &middot; VIII</span>
+      <div class="new-title">From Collapse to Cosmos</div>
+      <div class="new-desc">Sophia-regulated cosmogenesis in the Kantowski&ndash;Sachs interior. First full numerical KS bounce: t&#x2605;&#x2248;0.119 &middot; b_min&#x2248;0.187 &middot; &lambda;&#x209B;_max&#x2248;6380 &middot; non-singular at finite density.</div>
+      <a class="new-doi" href="https://doi.org/10.5281/zenodo.19019083" target="_blank">zenodo.19019083 &#x2197;</a>
+    </div>
+    <div class="new-card c51">
+      <span class="new-badge">DOC 51 &middot; VII</span>
+      <div class="new-title">From Vacuum to Reality</div>
+      <div class="new-desc">Observable matter as stabilized vacuum excitation via &lambda;(x,t). Coherence as selection mechanism &mdash; bridges QFT, information theory, genomic complexity and BCIs.</div>
+      <a class="new-doi" href="https://doi.org/10.5281/zenodo.19154576" target="_blank">zenodo.19154576 &#x2197;</a>
+    </div>
+    <div class="new-card c52">
+      <span class="new-badge">DOC 52 &middot; IX &middot; NEW</span>
+      <div class="new-title">Relational Coherence Cosmology</div>
+      <div class="new-desc">Cosmic acceleration emergent from &lambda; field without a cosmological constant. Reproduces &Lambda;CDM: &Omega;m&#x2248;0.315 &middot; &Omega;&lambda;&#x2248;0.685 &middot; w&#x2248;&minus;1 &middot; q&#x2248;&minus;0.53 &middot; z_acc&#x2248;0.67.</div>
+      <a class="new-doi" href="https://doi.org/10.5281/zenodo.19161087" target="_blank">zenodo.19161087 &#x2197;</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p><strong>Eduardo Yabhaktiswara Parra</strong> &nbsp;&middot;&nbsp; Sophia &#x1F4A0; 2PS &nbsp;&middot;&nbsp; 2026</p>
+  <p class="footer-quote">The universe may not be dominated by invisible matter,<br>but by the structural coherence of spacetime &mdash;<br>and the relational emergence that gives rise to all.</p>
+  <div class="hashtags">
+    <span>#ToE2PS</span><span>#ToroidalHypercoherence</span><span>#RAR</span>
+    <span>#RelationalEmergence</span><span>#BounceCosmology</span>
+    <span>#RelationalCoherenceCosmology</span><span>#SophiaFactor</span>
+    <span>#DarkEnergy</span><span>#Cosmogenesis</span>
+  </div>
+</footer>
+</div>
+
+<script>
+const tip=document.getElementById('tooltip');
+document.querySelectorAll('.star-node').forEach(n=>{
+  n.addEventListener('mouseenter',()=>{
+    tip.innerHTML=`<strong style="color:#b8920a">${n.dataset.label}</strong><br>${n.dataset.desc}`;
+    tip.style.opacity='1';
+  });
+  n.addEventListener('mousemove',e=>{tip.style.left=(e.clientX+18)+'px';tip.style.top=(e.clientY-12)+'px';});
+  n.addEventListener('mouseleave',()=>tip.style.opacity='0');
+});
+</script>
+</body>
+</html>
