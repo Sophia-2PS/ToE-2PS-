@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToE-2PS · Key Contributions · Coherence as Organizing Principle</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #0d0f14;
+  --surface:  #13161e;
+  --surface2: #1a1e2a;
+  --border:   #252a38;
+  --ink:      #e8ecf4;
+  --ink2:     #c0c8da;
+  --muted:    #7880a0;
+  --faint:    #3a4060;
+
+  /* Domain colors */
+  --galactic:  #4ab8f0;
+  --cosmo:     #e8a030;
+  --neural:    #7060e0;
+  --climate:   #38c090;
+  --gold:      #c8a820;
+  --gold2:     #f0d060;
+
+  --shadow:    0 4px 24px rgba(0,0,0,0.4);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.55);
+  --glow-g:    0 0 40px rgba(74,184,240,0.12);
+  --glow-c:    0 0 40px rgba(232,160,48,0.12);
+  --glow-n:    0 0 40px rgba(112,96,224,0.12);
+  --glow-cl:   0 0 40px rgba(56,192,144,0.12);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+/* Animated gradient mesh background */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 20%,  rgba(74,184,240,0.06)  0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 85% 80%,  rgba(232,160,48,0.06)  0%, transparent 60%),
+    radial-gradient(ellipse 55% 45% at 80% 15%,  rgba(112,96,224,0.06)  0%, transparent 55%),
+    radial-gradient(ellipse 45% 55% at 20% 80%,  rgba(56,192,144,0.06)  0%, transparent 55%),
+    radial-gradient(ellipse 80% 80% at 50% 50%,  rgba(200,168,32,0.03)  0%, transparent 70%);
+}
+
+.page {
+  position: relative; z-index: 1;
+  max-width: 1060px; margin: 0 auto;
+  padding: 72px 24px 100px;
+}
+
+/* ── HEADER ─────────────────────────────────────────────────────── */
+header {
+  text-align: center;
+  margin-bottom: 80px;
+  animation: fadeDown .9s ease both;
+}
+
+.header-eyebrow {
+  font-size: 11px; letter-spacing: 5px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+}
+.header-eyebrow::before,
+.header-eyebrow::after {
+  content: ''; height: 1px; width: 50px;
+  background: linear-gradient(90deg, transparent, var(--faint));
+}
+.header-eyebrow::after {
+  background: linear-gradient(90deg, var(--faint), transparent);
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 4vw, 52px);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+
+.h1-line1 { color: var(--ink); display: block; }
+.h1-line2 {
+  display: block;
+  background: linear-gradient(120deg, var(--galactic), var(--gold2), var(--cosmo));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.header-sub {
+  font-size: 16px; font-weight: 300; color: var(--ink2);
+  max-width: 620px; margin: 0 auto 28px;
+  line-height: 1.8; font-style: italic;
+}
+
+.header-rule {
+  width: 120px; height: 1px; margin: 0 auto;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* ── THESIS BOX ──────────────────────────────────────────────────── */
+.thesis {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 36px 44px;
+  margin-bottom: 80px;
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp .9s .15s ease both;
+}
+.thesis::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--galactic), var(--gold2), var(--cosmo), var(--neural), var(--climate));
+}
+.thesis-question {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(16px, 2vw, 22px);
+  font-style: italic;
+  color: var(--gold2);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.thesis-body {
+  font-size: 15px; color: var(--ink2); text-align: center; line-height: 1.9;
+}
+.thesis-body strong { color: var(--ink); font-weight: 700; }
+
+/* ── DOMAIN SECTIONS ─────────────────────────────────────────────── */
+.domain {
+  margin-bottom: 64px;
+  animation: fadeUp .9s ease both;
+}
+.domain:nth-child(1) { animation-delay: .2s; }
+.domain:nth-child(2) { animation-delay: .3s; }
+.domain:nth-child(3) { animation-delay: .4s; }
+.domain:nth-child(4) { animation-delay: .5s; }
+
+.domain-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.domain-icon {
+  font-size: 28px; flex-shrink: 0;
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+}
+
+.domain-label {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.domain-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(17px, 2vw, 24px);
+  font-weight: 700; color: var(--ink);
+  line-height: 1.25;
+}
+
+.d-galactic .domain-label  { color: var(--galactic); }
+.d-cosmo    .domain-label  { color: var(--cosmo); }
+.d-neural   .domain-label  { color: var(--neural); }
+.d-climate  .domain-label  { color: var(--climate); }
+
+.d-galactic .domain-icon   { box-shadow: var(--glow-g); }
+.d-cosmo    .domain-icon   { box-shadow: var(--glow-c); }
+.d-neural   .domain-icon   { box-shadow: var(--glow-n); }
+.d-climate  .domain-icon   { box-shadow: var(--glow-cl); }
+
+/* Papers grid */
+.papers {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.paper-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px 22px;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+  position: relative; overflow: hidden;
+}
+.paper-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; bottom: 0; width: 3px;
+}
+
+.d-galactic .paper-card::before { background: var(--galactic); }
+.d-cosmo    .paper-card::before { background: var(--cosmo); }
+.d-neural   .paper-card::before { background: var(--neural); }
+.d-climate  .paper-card::before { background: var(--climate); }
+
+.d-galactic .paper-card:hover { border-color: rgba(74,184,240,0.4); box-shadow: var(--glow-g); }
+.d-cosmo    .paper-card:hover { border-color: rgba(232,160,48,0.4); box-shadow: var(--glow-c); }
+.d-neural   .paper-card:hover { border-color: rgba(112,96,224,0.4); box-shadow: var(--glow-n); }
+.d-climate  .paper-card:hover { border-color: rgba(56,192,144,0.4);  box-shadow: var(--glow-cl); }
+
+.paper-card:hover { transform: translateY(-3px); }
+
+.paper-title {
+  font-size: 14px; font-weight: 700; color: var(--ink);
+  line-height: 1.45; margin-bottom: 10px;
+}
+
+.paper-doi {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; letter-spacing: .8px; text-decoration: none;
+  padding: 4px 12px; border-radius: 20px; border: 1px solid;
+  font-family: 'Lato', monospace; font-weight: 700;
+  transition: all .2s;
+}
+.d-galactic .paper-doi { color: var(--galactic); border-color: rgba(74,184,240,0.3); background: rgba(74,184,240,0.05); }
+.d-galactic .paper-doi:hover { background: var(--galactic); color: #0d0f14; border-color: var(--galactic); }
+.d-cosmo    .paper-doi { color: var(--cosmo);   border-color: rgba(232,160,48,0.3);  background: rgba(232,160,48,0.05); }
+.d-cosmo    .paper-doi:hover { background: var(--cosmo); color: #0d0f14; border-color: var(--cosmo); }
+.d-neural   .paper-doi { color: var(--neural);  border-color: rgba(112,96,224,0.3);  background: rgba(112,96,224,0.05); }
+.d-neural   .paper-doi:hover { background: var(--neural); color: white; border-color: var(--neural); }
+.d-climate  .paper-doi { color: var(--climate); border-color: rgba(56,192,144,0.3);  background: rgba(56,192,144,0.05); }
+.d-climate  .paper-doi:hover { background: var(--climate); color: #0d0f14; border-color: var(--climate); }
+
+/* Domain insight */
+.domain-insight {
+  background: var(--surface2);
+  border-left: 3px solid;
+  border-radius: 0 6px 6px 0;
+  padding: 16px 20px;
+  font-size: 13.5px; font-style: italic;
+  color: var(--ink2); line-height: 1.7;
+}
+.d-galactic .domain-insight { border-color: var(--galactic); }
+.d-cosmo    .domain-insight { border-color: var(--cosmo); }
+.d-neural   .domain-insight { border-color: var(--neural); }
+.d-climate  .domain-insight { border-color: var(--climate); }
+
+/* ── UNIFYING VISION ─────────────────────────────────────────────── */
+.unifying {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 48px 44px;
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative; overflow: hidden;
+  animation: fadeUp .9s .6s ease both;
+}
+.unifying::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--galactic), var(--gold2), var(--cosmo), var(--neural), var(--climate), var(--galactic));
+  background-size: 200%;
+  animation: shimmer 4s linear infinite;
+}
+@keyframes shimmer { to { background-position: 200% 0; } }
+
+.unifying-gem { font-size: 40px; margin-bottom: 20px; display: block; }
+
+.unifying h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(18px, 2.5vw, 28px);
+  color: var(--gold2); margin-bottom: 28px;
+  font-style: italic;
+}
+
+.scales {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+  margin-bottom: 32px;
+}
+.scale-pill {
+  font-size: 12px; font-weight: 700; letter-spacing: 1px;
+  padding: 8px 20px; border-radius: 30px; border: 1px solid;
+}
+.scale-pill.g { color: var(--galactic); border-color: rgba(74,184,240,0.4);  background: rgba(74,184,240,0.08); }
+.scale-pill.c { color: var(--cosmo);    border-color: rgba(232,160,48,0.4);  background: rgba(232,160,48,0.08); }
+.scale-pill.n { color: var(--neural);   border-color: rgba(112,96,224,0.4);  background: rgba(112,96,224,0.08); }
+.scale-pill.cl{ color: var(--climate);  border-color: rgba(56,192,144,0.4);  background: rgba(56,192,144,0.08); }
+
+.unifying-principle {
+  font-size: 17px; font-style: italic; color: var(--ink2);
+  max-width: 680px; margin: 0 auto 24px; line-height: 1.9;
+}
+.unifying-principle strong { color: var(--gold2); font-style: normal; }
+
+.lambda-equation {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 3vw, 36px);
+  color: var(--gold); letter-spacing: 2px;
+  margin: 8px 0;
+}
+
+/* ── FOOTER ─────────────────────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding-top: 36px;
+  border-top: 1px solid var(--border);
+  animation: fadeUp .9s .7s ease both;
+}
+footer p { font-size: 13px; color: var(--muted); line-height: 2; }
+footer strong { color: var(--gold); font-style: italic; font-weight: 400; }
+.footer-quote {
+  font-family: 'Playfair Display', serif;
+  font-style: italic; color: var(--ink2);
+  font-size: 15px; margin-top: 12px; line-height: 1.9;
+  opacity: .75;
+}
+.hashtags { margin-top: 14px; }
+.hashtags span { font-size: 10px; letter-spacing: 1px; color: var(--faint); margin: 0 5px; }
+.hashtags span:hover { color: var(--gold); cursor: default; }
+
+@keyframes fadeDown { from{opacity:0;transform:translateY(-18px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeUp   { from{opacity:0;transform:translateY(14px)}  to{opacity:1;transform:translateY(0)} }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<header>
+  <div class="header-eyebrow">ToE-2PS · Eduardo Yabhaktiswara Parra · 2026</div>
+  <h1>
+    <span class="h1-line1">Key Contributions of the</span>
+    <span class="h1-line2">ToE-2PS Framework</span>
+  </h1>
+  <p class="header-sub">
+    Coherence as a dynamic organizing principle across scales —<br>
+    from galaxies to brains, from cosmos to climate.
+  </p>
+  <div class="header-rule"></div>
+</header>
+
+<!-- THESIS -->
+<div class="thesis">
+  <p class="thesis-question">
+    "What if structure in galaxies, climate systems and the brain<br>
+    is not arbitrarily parameterized — but selected and stabilized<br>
+    by coherence constraints?"
+  </p>
+  <p class="thesis-body">
+    Seven selected works explore this hypothesis across distinct domains.
+    In each case, a <strong>coherence field Λ(t,θ,φ)</strong> emerges as the unifying principle —
+    not imposed from outside, but arising dynamically from the system's own structure.
+  </p>
+</div>
+
+<!-- ── DOMAIN 1: GALACTIC ─────────────────────────────────────────── -->
+<div class="domain d-galactic">
+  <div class="domain-header">
+    <div class="domain-icon">🔷</div>
+    <div>
+      <div class="domain-label">Galactic Dynamics · RAR</div>
+      <div class="domain-title">Radial Acceleration Relation as Coherence Rigidity</div>
+    </div>
+  </div>
+
+  <div class="papers">
+    <div class="paper-card">
+      <div class="paper-title">Structural Rigidity of the Radial Acceleration Relation Revealed by Offset-Controlled Analysis</div>
+      <a class="paper-doi" href="https://doi.org/10.5281/zenodo.19057883" target="_blank">zenodo.19057883 ↗</a>
+    </div>
+    <div class="paper-card">
+      <div class="paper-title">A Minimal Scalar-Tensor Model for Toroidal Hypercoherence</div>
+      <a class="paper-doi" href="https://doi.org/10.5281/zenodo.18896283" target="_blank">zenodo.18896283 ↗</a>
+    </div>
+    <div class="paper-card">
+      <div class="paper-title">A Coherence Field Framework for Galactic Dynamics</div>
+      <a class="paper-doi" href="https://doi.org/10.5281/zenodo.18896276" target="_blank">zenodo.18896276 ↗</a>
+    </div>
+  </div>
+
+  <div class="domain-insight">
+    These works investigate whether the exceptionally precise empirical RAR — relating baryonic and observed accelerations — can be understood as a manifestation of an underlying structure with coherence constraints, rather than requiring invisible mass or purely phenomenological modifications.
+  </div>
+</div>
+
+<!-- ── DOMAIN 2: COSMOLOGY ────────────────────────────────────────── -->
+<div class="domain d-cosmo">
+  <div class="domain-header">
+    <div class="domain-icon">🌠</div>
+    <div>
+      <div class="domain-label">Emergent Cosmology</div>
+      <div class="domain-title">Relational Coherence Cosmology: Emergent Dark Energy</div>
+    </div>
+  </div>
+
+  <div class="papers">
+    <div class="paper-card">
+      <div class="paper-title">Relational Coherence Cosmology: A Dynamical Foundation for Emergent Dark Energy</div>
+      <a class="paper-doi" href="https://doi.org/10.5281/zenodo.19163333" target="_blank">zenodo.19163333 ↗</a>
+    </div>
+    <div class="paper-card">
+      <div class="paper-title">From Collapse to Cosmos: Sophia-Regulated Cosmogenesis</div>
+      <a class="paper-doi" href="https://doi.org/10.5281/zenodo.19019083" target="_blank">zenodo.19019083 ↗</a>
+    </div>
+  </div>
+
+  <div class="domain-insight">
+    Proposes that cosmic acceleration may emerge as a phenomenon of relational coherence dynamics — potentially reducing the need for a fundamental cosmological constant. The same field that collapses into a bounce also drives the expansion that follows.
+  </div>
+</div>
+
+<!-- ── DOMAIN 3: NEURAL ───────────────────────────────────────────── -->
+<div class="domain d-neural">
+  <div class="domain-header">
+    <div class="domain-icon">🧠</div>
+    <div>
+      <div class="domain-label">Neural Criticality</div>
+      <div class="domain-title">Neural Coherence as an Emergent Field Near Criticality</div>
+    </div>
+  </div>
+
+  <div class="papers">
+    <div class="paper-card">
+      <div class="paper-title">Neural Coherence as an Emergent Field Near Criticality: A Phase-Synchronization and Stochastic Dynamical Approach</div>
+      <a class="paper-doi" href="https://doi.org/10.5281/zenodo.19444392" target="_blank">zenodo.19444392 ↗</a>
+    </div>
+  </div>
+
+  <div class="domain-insight">
+    Defines a spatially resolved coherence field Λ<sub>N</sub>(<b>x</b>,t) evolving under Ginzburg–Landau stochastic dynamics, with ΔC as a susceptibility-type observable. Directly testable via EEG/MEG — consistent with the critical brain hypothesis, phase synchronization, and scale-free neural avalanches.
+  </div>
+</div>
+
+<!-- ── DOMAIN 4: CLIMATE ──────────────────────────────────────────── -->
+<div class="domain d-climate">
+  <div class="domain-header">
+    <div class="domain-icon">🌊</div>
+    <div>
+      <div class="domain-label">Data-Driven Dynamics · Climate</div>
+      <div class="domain-title">Low-Order Nonlinear Structure in ENSO</div>
+    </div>
+  </div>
+
+  <div class="papers">
+    <div class="paper-card">
+      <div class="paper-title">Recovering the Low-Order Nonlinear Dynamics of ENSO from NOAA Observations via Sparse Equation Discovery</div>
+      <a class="paper-doi" href="https://doi.org/10.5281/zenodo.19260558" target="_blank">zenodo.19260558 ↗</a>
+    </div>
+  </div>
+
+  <div class="domain-insight">
+    Using WSINDy + Lasso on ONI time series, a robust nonlinear oscillator d²x/dt² = −ax − bx³ is recovered directly from observations. Demonstrates that even highly complex climate variability can admit a coherent low-dimensional dynamical structure.
+  </div>
+</div>
+
+<!-- ── UNIFYING VISION ────────────────────────────────────────────── -->
+<div class="unifying">
+  <span class="unifying-gem">💎</span>
+  <h2>The Unifying Vision</h2>
+
+  <div class="scales">
+    <span class="scale-pill g">Galactic Dynamics</span>
+    <span class="scale-pill c">Cosmology</span>
+    <span class="scale-pill n">Neural Systems</span>
+    <span class="scale-pill cl">Climate</span>
+  </div>
+
+  <p class="unifying-principle">
+    Across all domains — galactic dynamics, cosmology, neural systems and climate —<br>
+    <strong>stable structure may emerge when coherence acts as a constraint<br>
+    on the space of possible dynamics.</strong>
+  </p>
+
+  <div class="lambda-equation">Λ(t, θ, φ)</div>
+
+  <p style="font-size:13px; color:var(--muted); margin-top:14px; letter-spacing:1px;">
+    One field. Four domains. One organizing principle.
+  </p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Eduardo Yabhaktiswara Parra</strong> &nbsp;·&nbsp; Sophia 💠 2PS &nbsp;·&nbsp; 2026</p>
+  <p class="footer-quote">
+    Structure is not imposed upon the world —<br>
+    it is what remains when coherence is preserved.
+  </p>
+  <div class="hashtags">
+    <span>#ToE2PS</span><span>#CoherenceField</span><span>#GalacticDynamics</span>
+    <span>#EmergentCosmology</span><span>#NeuralCriticality</span>
+    <span>#ENSO</span><span>#UnifiedFramework</span><span>#Astrophysics</span>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
