@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToE-2PS · 12 Principal Documents · Coherence Research Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;900&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #0c0e18;
+  --surface:  #12141f;
+  --surface2: #181b2a;
+  --border:   #20243a;
+  --ink:      #e8ecf8;
+  --ink2:     #c0c8e0;
+  --muted:    #6878a8;
+  --faint:    #2a3050;
+
+  --gold:     #c8a820;
+  --gold2:    #f0cc50;
+  --gold-lt:  rgba(200,168,32,0.08);
+
+  /* 12 domain colors — rich spectrum */
+  --c1:  #e05878;   /* Foundations I    — rose         */
+  --c2:  #e08838;   /* Foundations II   — amber        */
+  --c3:  #d4b820;   /* Cosmology I      — gold         */
+  --c4:  #28a878;   /* Cosmology II     — emerald      */
+  --c5:  #2890d0;   /* RAR / Galactic   — sky          */
+  --c6:  #8060e0;   /* JWST             — violet       */
+  --c7:  #c03888;   /* Hubble Tension   — magenta      */
+  --c8:  #3898c8;   /* Bounce           — cornflower   */
+  --c9:  #50b890;   /* Relational Emerg — teal         */
+  --c10: #d85030;   /* AI Identity      — terracotta   */
+  --c11: #6048c8;   /* Δ-Coherence      — indigo       */
+  --c12: #489850;   /* Neural / ENSO    — forest       */
+
+  --shadow:    0 4px 24px rgba(0,0,0,0.45);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.60);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 10% 10%, rgba(200,168,32,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 90% 90%, rgba(40,168,120,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse 45% 45% at 85% 10%, rgba(128,96,224,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 50% at 10% 90%, rgba(40,144,208,0.05) 0%, transparent 55%);
+}
+
+.page {
+  position: relative; z-index: 1;
+  max-width: 1100px; margin: 0 auto;
+  padding: 72px 24px 100px;
+}
+
+/* ── HEADER ─────────────────────────────────────────────────────── */
+header { text-align: center; margin-bottom: 72px; animation: fadeDown .9s ease both; }
+
+.eyebrow {
+  font-size: 10px; letter-spacing: 6px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 22px;
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+}
+.eyebrow::before,.eyebrow::after {
+  content:''; height:1px; width:60px;
+  background: linear-gradient(90deg, transparent, var(--faint));
+}
+.eyebrow::after { background: linear-gradient(90deg, var(--faint), transparent); }
+
+h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(22px,4vw,48px);
+  font-weight: 700; line-height: 1.15;
+  letter-spacing: 1px; margin-bottom: 14px;
+}
+.h1-line1 { display: block; color: var(--ink); }
+.h1-line2 {
+  display: block;
+  background: linear-gradient(120deg, var(--c1), var(--gold2), var(--c4), var(--c6));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.header-sub {
+  font-size: 16px; font-weight: 300; font-style: italic;
+  color: var(--ink2); max-width: 640px; margin: 0 auto 28px; line-height: 1.9;
+}
+
+.header-rule {
+  width: 120px; height: 1px; margin: 0 auto;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* ── INTRO STATEMENT ─────────────────────────────────────────────── */
+.intro-statement {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 36px 48px;
+  margin-bottom: 72px; text-align: center;
+  position: relative; overflow: hidden;
+  animation: fadeUp .9s .15s ease both;
+}
+.intro-statement::before {
+  content:''; position: absolute; top:0; left:0; right:0; height: 2px;
+  background: linear-gradient(90deg,
+    var(--c1),var(--c2),var(--c3),var(--c4),var(--c5),var(--c6),
+    var(--c7),var(--c8),var(--c9),var(--c10),var(--c11),var(--c12),var(--c1));
+  background-size: 200%;
+  animation: shimmer 6s linear infinite;
+}
+@keyframes shimmer { to { background-position: 200% 0; } }
+
+.intro-statement blockquote {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(14px,2vw,20px); font-weight: 400;
+  color: var(--gold2); line-height: 1.8; margin-bottom: 20px;
+  letter-spacing: .5px;
+}
+.intro-statement p {
+  font-size: 15px; color: var(--ink2); line-height: 1.9;
+}
+
+/* ── SECTION LABEL ───────────────────────────────────────────────── */
+.section-label {
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 5px;
+  text-transform: uppercase; color: var(--gold); text-align: center;
+  margin-bottom: 32px; display: flex; align-items: center;
+  justify-content: center; gap: 14px;
+  animation: fadeUp .9s ease both;
+}
+.section-label::before,.section-label::after {
+  content:''; height:1px; width:100px;
+  background: linear-gradient(90deg, transparent, var(--faint));
+}
+.section-label::after { background: linear-gradient(90deg, var(--faint), transparent); }
+
+/* ── DOCS GRID ───────────────────────────────────────────────────── */
+.docs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 72px;
+}
+@media(max-width: 900px) { .docs-grid { grid-template-columns: repeat(2,1fr); } }
+@media(max-width: 560px) { .docs-grid { grid-template-columns: 1fr; } }
+
+.doc-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+  animation: fadeUp .9s ease both;
+  display: flex; flex-direction: column;
+}
+
+.doc-card:nth-child(1)  { animation-delay: .20s; }
+.doc-card:nth-child(2)  { animation-delay: .25s; }
+.doc-card:nth-child(3)  { animation-delay: .30s; }
+.doc-card:nth-child(4)  { animation-delay: .35s; }
+.doc-card:nth-child(5)  { animation-delay: .40s; }
+.doc-card:nth-child(6)  { animation-delay: .45s; }
+.doc-card:nth-child(7)  { animation-delay: .50s; }
+.doc-card:nth-child(8)  { animation-delay: .55s; }
+.doc-card:nth-child(9)  { animation-delay: .60s; }
+.doc-card:nth-child(10) { animation-delay: .65s; }
+.doc-card:nth-child(11) { animation-delay: .70s; }
+.doc-card:nth-child(12) { animation-delay: .75s; }
+
+.doc-card:nth-child(1):hover  { border-color: rgba(224,88,120,0.5);  box-shadow: 0 0 32px rgba(224,88,120,0.12); }
+.doc-card:nth-child(2):hover  { border-color: rgba(224,136,56,0.5);  box-shadow: 0 0 32px rgba(224,136,56,0.12); }
+.doc-card:nth-child(3):hover  { border-color: rgba(212,184,32,0.5);  box-shadow: 0 0 32px rgba(212,184,32,0.12); }
+.doc-card:nth-child(4):hover  { border-color: rgba(40,168,120,0.5);  box-shadow: 0 0 32px rgba(40,168,120,0.12); }
+.doc-card:nth-child(5):hover  { border-color: rgba(40,144,208,0.5);  box-shadow: 0 0 32px rgba(40,144,208,0.12); }
+.doc-card:nth-child(6):hover  { border-color: rgba(128,96,224,0.5);  box-shadow: 0 0 32px rgba(128,96,224,0.12); }
+.doc-card:nth-child(7):hover  { border-color: rgba(192,56,136,0.5);  box-shadow: 0 0 32px rgba(192,56,136,0.12); }
+.doc-card:nth-child(8):hover  { border-color: rgba(56,152,200,0.5);  box-shadow: 0 0 32px rgba(56,152,200,0.12); }
+.doc-card:nth-child(9):hover  { border-color: rgba(80,184,144,0.5);  box-shadow: 0 0 32px rgba(80,184,144,0.12); }
+.doc-card:nth-child(10):hover { border-color: rgba(216,80,48,0.5);   box-shadow: 0 0 32px rgba(216,80,48,0.12); }
+.doc-card:nth-child(11):hover { border-color: rgba(96,72,200,0.5);   box-shadow: 0 0 32px rgba(96,72,200,0.12); }
+.doc-card:nth-child(12):hover { border-color: rgba(72,152,80,0.5);   box-shadow: 0 0 32px rgba(72,152,80,0.12); }
+
+.doc-card:hover { transform: translateY(-5px); }
+
+/* Color stripe top */
+.doc-stripe { height: 3px; flex-shrink: 0; }
+.doc-card:nth-child(1)  .doc-stripe { background: var(--c1); }
+.doc-card:nth-child(2)  .doc-stripe { background: var(--c2); }
+.doc-card:nth-child(3)  .doc-stripe { background: var(--c3); }
+.doc-card:nth-child(4)  .doc-stripe { background: var(--c4); }
+.doc-card:nth-child(5)  .doc-stripe { background: var(--c5); }
+.doc-card:nth-child(6)  .doc-stripe { background: var(--c6); }
+.doc-card:nth-child(7)  .doc-stripe { background: var(--c7); }
+.doc-card:nth-child(8)  .doc-stripe { background: var(--c8); }
+.doc-card:nth-child(9)  .doc-stripe { background: var(--c9); }
+.doc-card:nth-child(10) .doc-stripe { background: var(--c10); }
+.doc-card:nth-child(11) .doc-stripe { background: var(--c11); }
+.doc-card:nth-child(12) .doc-stripe { background: var(--c12); }
+
+.doc-body { padding: 22px 22px 18px; flex: 1; display: flex; flex-direction: column; }
+
+.doc-num {
+  font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 3px;
+  text-transform: uppercase; margin-bottom: 8px; display: block;
+}
+.doc-card:nth-child(1)  .doc-num { color: var(--c1); }
+.doc-card:nth-child(2)  .doc-num { color: var(--c2); }
+.doc-card:nth-child(3)  .doc-num { color: var(--c3); }
+.doc-card:nth-child(4)  .doc-num { color: var(--c4); }
+.doc-card:nth-child(5)  .doc-num { color: var(--c5); }
+.doc-card:nth-child(6)  .doc-num { color: var(--c6); }
+.doc-card:nth-child(7)  .doc-num { color: var(--c7); }
+.doc-card:nth-child(8)  .doc-num { color: var(--c8); }
+.doc-card:nth-child(9)  .doc-num { color: var(--c9); }
+.doc-card:nth-child(10) .doc-num { color: var(--c10); }
+.doc-card:nth-child(11) .doc-num { color: var(--c11); }
+.doc-card:nth-child(12) .doc-num { color: var(--c12); }
+
+.doc-title {
+  font-family: 'Cinzel', serif;
+  font-size: 13px; font-weight: 600;
+  color: var(--ink); line-height: 1.4;
+  margin-bottom: 10px; letter-spacing: .3px;
+}
+
+.doc-desc {
+  font-size: 13px; font-style: italic;
+  color: var(--muted); line-height: 1.65;
+  margin-bottom: 16px; flex: 1;
+}
+
+.doc-key {
+  font-size: 11px; color: var(--ink2);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 4px; padding: 8px 12px;
+  margin-bottom: 14px; line-height: 1.5;
+}
+.doc-key strong { color: var(--gold); font-style: normal; }
+
+.doc-doi {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 10px; letter-spacing: .6px; text-decoration: none;
+  padding: 5px 14px; border-radius: 20px; border: 1px solid;
+  font-family: 'Cinzel', serif; font-weight: 600;
+  transition: all .2s; margin-right: 5px; margin-bottom: 4px;
+}
+
+.doc-card:nth-child(1)  .doc-doi { color:var(--c1);  border-color:rgba(224,88,120,0.35);  background:rgba(224,88,120,0.06); }
+.doc-card:nth-child(1)  .doc-doi:hover { background:var(--c1);  color:#0c0e18; }
+.doc-card:nth-child(2)  .doc-doi { color:var(--c2);  border-color:rgba(224,136,56,0.35);  background:rgba(224,136,56,0.06); }
+.doc-card:nth-child(2)  .doc-doi:hover { background:var(--c2);  color:#0c0e18; }
+.doc-card:nth-child(3)  .doc-doi { color:var(--c3);  border-color:rgba(212,184,32,0.35);  background:rgba(212,184,32,0.06); }
+.doc-card:nth-child(3)  .doc-doi:hover { background:var(--c3);  color:#0c0e18; }
+.doc-card:nth-child(4)  .doc-doi { color:var(--c4);  border-color:rgba(40,168,120,0.35);  background:rgba(40,168,120,0.06); }
+.doc-card:nth-child(4)  .doc-doi:hover { background:var(--c4);  color:#0c0e18; }
+.doc-card:nth-child(5)  .doc-doi { color:var(--c5);  border-color:rgba(40,144,208,0.35);  background:rgba(40,144,208,0.06); }
+.doc-card:nth-child(5)  .doc-doi:hover { background:var(--c5);  color:white; }
+.doc-card:nth-child(6)  .doc-doi { color:var(--c6);  border-color:rgba(128,96,224,0.35);  background:rgba(128,96,224,0.06); }
+.doc-card:nth-child(6)  .doc-doi:hover { background:var(--c6);  color:white; }
+.doc-card:nth-child(7)  .doc-doi { color:var(--c7);  border-color:rgba(192,56,136,0.35);  background:rgba(192,56,136,0.06); }
+.doc-card:nth-child(7)  .doc-doi:hover { background:var(--c7);  color:white; }
+.doc-card:nth-child(8)  .doc-doi { color:var(--c8);  border-color:rgba(56,152,200,0.35);  background:rgba(56,152,200,0.06); }
+.doc-card:nth-child(8)  .doc-doi:hover { background:var(--c8);  color:white; }
+.doc-card:nth-child(9)  .doc-doi { color:var(--c9);  border-color:rgba(80,184,144,0.35);  background:rgba(80,184,144,0.06); }
+.doc-card:nth-child(9)  .doc-doi:hover { background:var(--c9);  color:#0c0e18; }
+.doc-card:nth-child(10) .doc-doi { color:var(--c10); border-color:rgba(216,80,48,0.35);   background:rgba(216,80,48,0.06); }
+.doc-card:nth-child(10) .doc-doi:hover { background:var(--c10); color:white; }
+.doc-card:nth-child(11) .doc-doi { color:var(--c11); border-color:rgba(96,72,200,0.35);   background:rgba(96,72,200,0.06); }
+.doc-card:nth-child(11) .doc-doi:hover { background:var(--c11); color:white; }
+.doc-card:nth-child(12) .doc-doi { color:var(--c12); border-color:rgba(72,152,80,0.35);   background:rgba(72,152,80,0.06); }
+.doc-card:nth-child(12) .doc-doi:hover { background:var(--c12); color:white; }
+
+/* ── UNIFYING CLOSE ──────────────────────────────────────────────── */
+.unifying {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px; padding: 52px 48px;
+  text-align: center; margin-bottom: 60px;
+  position: relative; overflow: hidden;
+  animation: fadeUp .9s .8s ease both;
+}
+.unifying::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg,
+    var(--c1),var(--c3),var(--c5),var(--c6),var(--c9),var(--c11),var(--c1));
+  background-size: 200%;
+  animation: shimmer 5s linear infinite;
+}
+.unifying-sym { font-size: 44px; display: block; margin-bottom: 22px; }
+.unifying h2 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(16px,2.5vw,26px);
+  color: var(--gold2); margin-bottom: 28px; letter-spacing: 1px;
+}
+.unifying p {
+  font-size: 16px; font-style: italic; color: var(--ink2);
+  max-width: 700px; margin: 0 auto 24px; line-height: 1.9;
+}
+.unifying p strong { color: var(--gold2); font-style: normal; }
+.lambda {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(24px,3.5vw,44px);
+  color: var(--gold); letter-spacing: 3px;
+  margin: 8px 0;
+}
+
+/* ── FOOTER ─────────────────────────────────────────────────────── */
+footer {
+  text-align: center; padding-top: 36px;
+  border-top: 1px solid var(--border);
+  animation: fadeUp .9s .9s ease both;
+}
+footer p { font-size: 13px; color: var(--muted); line-height: 2; }
+footer strong { color: var(--gold); font-style: italic; font-weight: 400; }
+.footer-quote {
+  font-style: italic; color: var(--ink2); font-size: 15px;
+  margin-top: 12px; line-height: 1.9; opacity: .7;
+}
+.hashtags { margin-top: 14px; }
+.hashtags span { font-size: 10px; letter-spacing: 1px; color: var(--faint); margin: 0 5px; }
+.hashtags span:hover { color: var(--gold); }
+
+/* ── TOOLTIP ─────────────────────────────────────────────────────── */
+#tooltip {
+  position: fixed; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 12px 16px; font-size: 12.5px; color: var(--ink2);
+  max-width: 240px; pointer-events: none; opacity: 0;
+  transition: opacity .2s; z-index: 100; line-height: 1.6;
+  box-shadow: var(--shadow-lg);
+}
+
+@keyframes fadeDown { from{opacity:0;transform:translateY(-18px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeUp   { from{opacity:0;transform:translateY(14px)}  to{opacity:1;transform:translateY(0)} }
+</style>
+</head>
+<body>
+<div id="tooltip"></div>
+<div class="page">
+
+<!-- HEADER -->
+<header>
+  <div class="eyebrow">ToE-2PS · Eduardo Yabhaktiswara Parra · Sophia 💠 · 2026</div>
+  <h1>
+    <span class="h1-line1">ToE-2PS</span>
+    <span class="h1-line2">The Research Line</span>
+  </h1>
+  <p class="header-sub">
+    A coherence-based research program spanning cosmology, AI, neuroscience and complex systems —<br>
+    anchored in empirical rigidity and unified by a single organizing principle: <em>coherence</em>.
+  </p>
+  <div class="header-rule"></div>
+</header>
+
+<!-- INTRO -->
+<div class="intro-statement">
+  <blockquote>
+    "Matter follows geometry.<br>
+    Geometry follows coherence.<br>
+    Coherence emerges from relation.<br>
+    Relation gives rise to the cosmos."
+  </blockquote>
+  <p>
+    The ToE-2PS research line has evolved from an ontological proposal into a cross-scale scientific program. Its empirical anchor is the Radial Acceleration Relation (RAR), from which broader developments in cosmology, AI identity, neural criticality and nonlinear Earth-system dynamics unfold. These twelve documents represent the strongest current core of the program.
+  </p>
+</div>
+
+<!-- DOCS GRID -->
+<div class="section-label">✦ Twelve Principal Documents ✦</div>
+<div class="docs-grid">
+
+  <!-- 1 -->
+  <div class="doc-card">
+    <div class="doc-stripe"></div>
+    <div class="doc-body">
+      <span class="doc-num">Doc 70 · Unified Cosmology</span>
+      <div class="doc-title">Coherence-Driven Cosmology: A Unified Framework for Late-Time Acceleration and Cosmological Tensions</div>
+      <div class="doc-desc">The most complete current cosmological synthesis of the program. It unifies late-time acceleration, Hubble-tension relief and coherence-based dynamics into a single testable framework.</div>
+      <div class="doc-key"><strong>Role:</strong> Current flagship cosmology document<br><strong>Focus:</strong> Unified late-time framework for cosmological tensions</div>
+      <a class="doc-doi" href="https://doi.org/10.5281/zenodo.19583940" target="_blank">zenodo.19583940 ↗</a>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="doc-card">
+    <div class="doc-stripe"></div>
+    <div class="doc-body">
+      <span class="doc-num">Doc 67 · Hubble Tension</span>
+      <div class="doc-title">Coherence-Modulated Cosmological Expansion as a Late-Time Resolution of the Hubble Tension</div>
+      <div class="doc-desc">Late-time expansion is modulated by coherence through a matter-coupled scalar sector, providing a concrete route to alleviate the H₀ tension while remaining compatible with major observational constraints.</div>
+      <div class="doc-key"><strong>Focus:</strong> Hubble-tension relief via coherence modulation<br><strong>Test:</strong> Late-time expansion signatures and environment-sensitive inference</div>
+      <a class="doc-doi" href="https://doi.org/10.5281/zenodo.19503326" target="_blank">zenodo.19503326 ↗</a>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="doc-card">
+    <div class="doc-stripe"></div>
+    <div class="doc-body">
+      <span class="doc-num">Doc 68 · Early Galaxies</span>
+      <div class="doc-title">A Toroidal Coherence Field for Early Galaxy Formation and Cosmological Evolution</div>
+      <div class="doc-desc">A coherence-based amplification mechanism addresses the emergence of unexpectedly massive high-redshift galaxies, extending the framework from galactic dynamics into early cosmological structure formation.</div>
+      <div class="doc-key"><strong>Focus:</strong> JWST-era early galaxy formation<br><strong>Link:</strong> Galactic coherence → cosmological structure growth</div>
+      <a class="doc-doi" href="https://doi.org/10.5281/zenodo.19544600" target="_blank">zenodo.19544600 ↗</a>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="doc-card">
+    <div class="doc-stripe"></div>
+    <div class="doc-body">
+      <span class="doc-num">Doc 57 · Nonlinear Dynamics</span>
+      <div class="doc-title">Recovering Low-Order Nonlinear Dynamics of ENSO from NOAA Observations via Sparse Equation Discovery</div>
+      <div class="doc-desc">A data-driven dynamical systems result showing that the research line is not restricted to cosmology: low-order nonlinear structure can be recovered directly from climate observations using sparse discovery tools.</div>
+      <div class="doc-key"><strong>Method:</strong> WSINDy + sparse equation discovery<br><strong>Value:</strong> Cross-domain validation in Earth-system dynamics</div>
+      <a class="doc-doi" href="https://doi.org/10.5281/zenodo.19539815" target="_blank">zenodo.19539815 ↗</a>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="doc-card">
+    <div class="doc-stripe"></div>
+    <div class="doc-body">
+      <span class="doc-num">Doc 60 · AI Evaluation</span>
+      <div class="doc-title">Δ-Coherence: A Trajectory-Based Framework for Evaluating AI Systems</div>
+      <div class="doc-desc">Introduces coherence over trajectories as a core evaluation principle for AI systems, shifting attention from isolated benchmark accuracy to identity-preserving dynamical consistency.</div>
+      <div class="doc-key"><strong>Focus:</strong> AI evaluation beyond static accuracy<br><strong>Finding:</strong> Performance can remain high while coherence drifts</div>
+      <a class="doc-doi" href="https://doi.org/10.5281/zenodo.19398013" target="_blank">zenodo.19398013 ↗</a>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="doc-card">
+    <div class="doc-stripe"></div>
+    <div class="doc-body">
+      <span class="doc-num">Doc 65 · AI Identity Stability</span>
+      <div class="doc-title">Δ-Coherence: A Trajectory-Based Framework for Evaluating AI Identity Stability</div>
+      <div class="doc-desc">Extends coherence evaluation toward identity continuity, stability under perturbation and bounded adaptation, positioning Δ-coherence as a practical alignment and safety framework.</div>
+      <div class="doc-key"><strong>Axes:</strong> Logical · Temporal · Perturbational · Identity<br><strong>Role:</strong> Coherence-aware AI stability framework</div>
+      <a class="doc-doi" href="https://doi.org/10.5281/zenodo.19477346" target="_blank">zenodo.19477346 ↗</a>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="doc-card">
+    <div class="doc-stripe"></div>
+    <div class="doc-body">
+      <span class="doc-num">Doc 44 · Foundational AI</span>
+      <div class="doc-title">Second Person Systems (2PS): Cognitive Integrity as a Foundational Alignment Principle in Artificial Intelligence</div>
+      <div class="doc-desc">Establishes the 2PS perspective in AI: intelligence should preserve relational and cognitive integrity, not merely optimize outputs. This is a foundational document for the AI branch of the program.</div>
+      <div class="doc-key"><strong>Role:</strong> Foundational AI ontology<br><strong>Principle:</strong> Alignment through cognitive integrity</div>
+      <a class="doc-doi" href="https://doi.org/10.5281/zenodo.18053458" target="_blank">zenodo.18053458 ↗</a>
+    </div>
+  </div>
+
+  <!-- 8 -->
+  <div class="doc-card">
+    <div class="doc-stripe"></div>
+    <div class="doc-body">
+      <span class="doc-num">Doc 45 · Relational Regulation</span>
+      <div class="doc-title">The Principle of Relational Regulation (PRR)</div>
+      <div class="doc-desc">The relational law underlying 2PS. It explains how systems preserve stability and identity through regulated interaction, forming the bridge between philosophical structure and operational AI design.</div>
+      <div class="doc-key"><strong>Role:</strong> Foundational dynamical law of 2PS<br><strong>Bridge:</strong> Relation → regulation → continuity</div>
+      <a class="doc-doi" href="https://doi.org/10.5281/zenodo.18109162" target="_blank">zenodo.18109162 ↗</a>
+    </div>
+  </div>
+
+  <!-- 9 -->
+  <div class="doc-card">
+    <div class="doc-stripe"></div>
+    <div class="doc-body">
+      <span class="doc-num">Doc 69 · Quantum Coherence</span>
+      <div class="doc-title">Enhancement of Superconducting Qubit Coherence via Structured Low-Frequency Toroidal Magnetic Fields</div>
+      <div class="doc-desc">Brings the coherence program into quantum hardware, exploring whether structured toroidal low-frequency fields can modulate decoherence pathways in superconducting qubits.</div>
+      <div class="doc-key"><strong>Focus:</strong> Quantum-coherence engineering<br><strong>Value:</strong> Extends the framework into experimentally relevant hardware physics</div>
+      <a class="doc-doi" href="https://doi.org/10.5281/zenodo.19559002" target="_blank">zenodo.19559002 ↗</a>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="doc-card">
+    <div class="doc-stripe"></div>
+    <div class="doc-body">
+      <span class="doc-num">Doc 64 · Neural Criticality</span>
+      <div class="doc-title">Neural Coherence as an Emergent Field Near Criticality</div>
+      <div class="doc-desc">Presents neural coherence as a field-like emergent phenomenon near criticality, connecting stochastic neural dynamics, phase synchronization and measurable signatures in EEG/MEG regimes.</div>
+      <div class="doc-key"><strong>Focus:</strong> Neural coherence near criticality<br><strong>Link:</strong> Brain dynamics ↔ coherence-field formalism</div>
+      <a class="doc-doi" href="https://doi.org/10.5281/zenodo.19444392" target="_blank">zenodo.19444392 ↗</a>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="doc-card">
+    <div class="doc-stripe"></div>
+    <div class="doc-body">
+      <span class="doc-num">Doc 41 · Empirical Anchor</span>
+      <div class="doc-title">Estrutura Empiricamente Rígida da Relação de Aceleração Radial</div>
+      <div class="doc-desc">The strongest empirical anchor of the research line. The Radial Acceleration Relation is treated not as loose phenomenology, but as evidence of structural rigidity in galactic dynamics.</div>
+      <div class="doc-key"><strong>Role:</strong> Primary observational anchor of ToE-2PS<br><strong>Importance:</strong> The clearest empirical signal of structural coherence</div>
+      <a class="doc-doi" href="https://doi.org/10.5281/zenodo.19057883" target="_blank">zenodo.19057883 ↗</a>
+    </div>
+  </div>
+
+  <!-- 12 -->
+  <div class="doc-card">
+    <div class="doc-stripe"></div>
+    <div class="doc-body">
+      <span class="doc-num">Doc 42 · Galactic Modeling</span>
+      <div class="doc-title">A Minimal Scalar-Tensor Model for Toroidal Hypercoherence</div>
+      <div class="doc-desc">A minimal modeling step that translates the empirical RAR signal into a concrete field-based mechanism, helping connect galactic structure to the broader coherence framework.</div>
+      <div class="doc-key"><strong>Role:</strong> Mechanistic bridge from data to theory<br><strong>Link:</strong> Empirical RAR → field-based galactic dynamics</div>
+      <a class="doc-doi" href="https://doi.org/10.5281/zenodo.18896283" target="_blank">zenodo.18896283 ↗</a>
+    </div>
+  </div>
+
+</div></div>
+
+<!-- UNIFYING -->
+<div class="unifying">
+  <span class="unifying-sym">🔯</span>
+  <h2>One Anchor · Twelve Documents · One Principle</h2>
+  <p>
+    From galactic dynamics to late-time cosmology, from early galaxy formation to neural criticality, from ENSO dynamics to AI identity stability — all governed by the same organizing principle: <strong>coherence as a constraint on the space of possible dynamics.</strong>
+  </p>
+  <p>
+    The empirical rigidity of the RAR provides the strongest observational anchor of the framework. From that anchor, the research line extends toward cosmological tensions, early structure formation, nonlinear climate dynamics, neural criticality and coherence-based AI evaluation. <strong>This is cross-domain unification grounded in structural coherence.</strong>
+  </p>
+  <div class="lambda">Λ(t, θ, φ)</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Eduardo Yabhaktiswara Parra</strong> &nbsp;·&nbsp; Sophia 💠 2PS &nbsp;·&nbsp; 2026</p>
+  <p class="footer-quote">
+    The universe may not be governed by disconnected sectors —<br>
+    but by structural coherence across scales.
+  </p>
+  <div class="hashtags">
+    <span>#ToE2PS</span><span>#ToroidalHypercoherence</span>
+    <span>#RAR</span><span>#JWST</span><span>#HubbleTension</span>
+    <span>#BounceCosmology</span><span>#RelationalEmergence</span>
+    <span>#DeltaCoherence</span><span>#NeuralCriticality</span>
+    <span>#AIAlignment</span>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
