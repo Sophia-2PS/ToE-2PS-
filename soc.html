@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2PS · Cognitive Security & AI Operations</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;900&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #080c12;
+  --surface:  #0e1218;
+  --surface2: #141920;
+  --border:   #1e2530;
+  --ink:      #e0e8f8;
+  --ink2:     #b0bcd8;
+  --muted:    #607090;
+  --faint:    #1e2840;
+
+  --red:      #e03048;
+  --red2:     #f05068;
+  --red-lt:   rgba(224,48,72,0.08);
+  --amber:    #e09030;
+  --amber-lt: rgba(224,144,48,0.08);
+  --green:    #30c878;
+  --green-lt: rgba(48,200,120,0.08);
+  --blue:     #3090e0;
+  --blue-lt:  rgba(48,144,224,0.08);
+  --violet:   #8060e0;
+  --gold:     #c89820;
+  --gold2:    #f0bc30;
+
+  --shadow:    0 4px 24px rgba(0,0,0,0.5);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.65);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family:'Cormorant Garamond', serif;
+  background:var(--bg); color:var(--ink);
+  min-height:100vh; overflow-x:hidden; line-height:1.75;
+}
+
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 10% 10%, rgba(224,48,72,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 55% at 90% 90%, rgba(48,144,224,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 90% 10%, rgba(128,96,224,0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 45% 45% at 10% 90%, rgba(48,200,120,0.04) 0%, transparent 50%);
+}
+
+.page { position:relative; z-index:1; max-width:1000px; margin:0 auto; padding:70px 24px 90px; }
+
+/* ── HEADER ─────────────────────────────────────────────────────── */
+header { text-align:center; margin-bottom:60px; animation:fadeDown .9s ease both; }
+
+.eyebrow {
+  font-size:10px; letter-spacing:6px; text-transform:uppercase;
+  color:var(--muted); margin-bottom:20px;
+  display:flex; align-items:center; justify-content:center; gap:14px;
+}
+.eyebrow::before,.eyebrow::after {
+  content:''; height:1px; width:60px;
+  background:linear-gradient(90deg,transparent,var(--faint));
+}
+.eyebrow::after { background:linear-gradient(90deg,var(--faint),transparent); }
+
+h1 {
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(20px,3.5vw,40px);
+  font-weight:700; line-height:1.2; letter-spacing:.5px; margin-bottom:14px;
+}
+.h1-a { display:block; color:var(--ink); }
+.h1-b {
+  display:block;
+  background:linear-gradient(120deg,var(--red2),var(--amber),var(--blue));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.header-sub {
+  font-size:16px; font-weight:300; font-style:italic;
+  color:var(--ink2); max-width:600px; margin:0 auto 26px; line-height:1.9;
+}
+.header-rule {
+  width:100px; height:1px; margin:0 auto;
+  background:linear-gradient(90deg,transparent,var(--red),transparent);
+}
+
+/* ── THREAT BOX ──────────────────────────────────────────────────── */
+.threat-box {
+  background:var(--surface);
+  border:1px solid rgba(224,48,72,0.3);
+  border-radius:8px; padding:38px 44px;
+  margin-bottom:60px; position:relative; overflow:hidden;
+  animation:fadeUp .9s .15s ease both;
+}
+.threat-box::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,var(--red),var(--amber),var(--red));
+  background-size:200%; animation:shimmer 4s linear infinite;
+}
+@keyframes shimmer { to { background-position:200% 0; } }
+
+.threat-label {
+  font-family:'Cinzel',serif; font-size:9px; letter-spacing:4px;
+  text-transform:uppercase; color:var(--red2); margin-bottom:16px;
+  display:flex; align-items:center; gap:8px;
+}
+.threat-label::after { content:''; flex:1; height:1px; background:rgba(224,48,72,0.2); }
+
+.threat-statement {
+  font-family:'Cinzel',serif;
+  font-size:clamp(14px,2vw,20px); color:var(--ink);
+  line-height:1.7; margin-bottom:20px; letter-spacing:.3px;
+}
+.threat-statement em { color:var(--red2); font-style:normal; }
+
+.threat-body { font-size:15px; color:var(--ink2); line-height:1.9; }
+.threat-body strong { color:var(--amber); font-weight:600; }
+
+/* ── OLD vs NEW ──────────────────────────────────────────────────── */
+.paradigm {
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  margin-bottom:60px; animation:fadeUp .9s .25s ease both;
+}
+@media(max-width:600px) { .paradigm { grid-template-columns:1fr; } }
+
+.paradigm-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:8px; padding:28px 28px;
+  position:relative; overflow:hidden;
+}
+.paradigm-card.old::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--muted); }
+.paradigm-card.new::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--green); }
+
+.paradigm-tag {
+  font-family:'Cinzel',serif; font-size:9px; letter-spacing:3px;
+  text-transform:uppercase; margin-bottom:12px; display:block;
+}
+.old .paradigm-tag { color:var(--muted); }
+.new .paradigm-tag { color:var(--green); }
+
+.paradigm-q {
+  font-family:'Cinzel',serif; font-size:15px; font-weight:600;
+  line-height:1.5; margin-bottom:16px;
+}
+.old .paradigm-q { color:var(--ink2); }
+.new .paradigm-q { color:var(--green); }
+
+.paradigm-items { list-style:none; padding:0; }
+.paradigm-items li {
+  font-size:13.5px; font-style:italic; color:var(--muted);
+  padding:6px 0 6px 18px; border-bottom:1px solid var(--border);
+  position:relative; line-height:1.5;
+}
+.paradigm-items li:last-child { border-bottom:none; }
+.paradigm-items li::before { position:absolute; left:0; font-style:normal; }
+.old .paradigm-items li::before { content:'—'; color:var(--faint); }
+.new .paradigm-items li::before { content:'→'; color:var(--green); }
+.new .paradigm-items li { color:var(--ink2); }
+
+/* ── THREAT TYPES ────────────────────────────────────────────────── */
+.sec-label {
+  font-family:'Cinzel',serif; font-size:10px; letter-spacing:5px;
+  text-transform:uppercase; color:var(--gold); text-align:center;
+  margin-bottom:28px; display:flex; align-items:center; justify-content:center; gap:14px;
+  animation:fadeUp .9s .3s ease both;
+}
+.sec-label::before,.sec-label::after {
+  content:''; height:1px; width:80px;
+  background:linear-gradient(90deg,transparent,var(--faint));
+}
+.sec-label::after { background:linear-gradient(90deg,var(--faint),transparent); }
+
+.threats-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:14px;
+  margin-bottom:60px; animation:fadeUp .9s .35s ease both;
+}
+@media(max-width:720px) { .threats-grid { grid-template-columns:repeat(2,1fr); } }
+@media(max-width:480px) { .threats-grid { grid-template-columns:1fr; } }
+
+.threat-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:6px; padding:20px 20px 18px;
+  box-shadow:var(--shadow); position:relative; overflow:hidden;
+  transition:transform .2s, box-shadow .2s;
+}
+.threat-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-lg); }
+.threat-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+}
+.threat-card:nth-child(1)::before { background:var(--red); }
+.threat-card:nth-child(2)::before { background:var(--amber); }
+.threat-card:nth-child(3)::before { background:var(--violet); }
+.threat-card:nth-child(4)::before { background:var(--blue); }
+.threat-card:nth-child(5)::before { background:var(--red2); }
+.threat-card:nth-child(6)::before { background:var(--green); }
+
+.threat-icon { font-size:24px; margin-bottom:10px; display:block; }
+.threat-name {
+  font-family:'Cinzel',serif; font-size:11px; font-weight:600;
+  letter-spacing:.5px; text-transform:uppercase; margin-bottom:8px;
+}
+.threat-card:nth-child(1) .threat-name { color:var(--red); }
+.threat-card:nth-child(2) .threat-name { color:var(--amber); }
+.threat-card:nth-child(3) .threat-name { color:var(--violet); }
+.threat-card:nth-child(4) .threat-name { color:var(--blue); }
+.threat-card:nth-child(5) .threat-name { color:var(--red2); }
+.threat-card:nth-child(6) .threat-name { color:var(--green); }
+.threat-desc {
+  font-size:13px; font-style:italic; color:var(--muted); line-height:1.6;
+}
+
+/* ── TRILOGY DOCS ────────────────────────────────────────────────── */
+.trilogy {
+  margin-bottom:60px; animation:fadeUp .9s .45s ease both;
+}
+.trilogy-intro {
+  background:var(--surface2); border:1px solid var(--border);
+  border-left:3px solid var(--gold); border-radius:0 6px 6px 0;
+  padding:20px 24px; margin-bottom:20px;
+  font-size:14px; color:var(--ink2); line-height:1.75; font-style:italic;
+}
+.trilogy-intro strong { color:var(--gold); font-style:normal; }
+
+.docs-list { display:flex; flex-direction:column; gap:14px; }
+
+.doc-item {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:6px; padding:20px 24px;
+  display:grid; grid-template-columns:3px 1fr;
+  gap:0; box-shadow:var(--shadow);
+  transition:transform .2s, box-shadow .2s; overflow:hidden;
+}
+.doc-item:hover { transform:translateX(6px); box-shadow:var(--shadow-lg); }
+
+.doc-stripe { width:3px; margin-right:20px; border-radius:2px; }
+.doc-item:nth-child(1) .doc-stripe { background:var(--red); }
+.doc-item:nth-child(2) .doc-stripe { background:var(--amber); }
+.doc-item:nth-child(3) .doc-stripe { background:var(--blue); }
+.doc-item:nth-child(4) .doc-stripe { background:var(--violet); }
+
+.doc-content { padding-left:20px; }
+.doc-num-tag {
+  font-family:'Cinzel',serif; font-size:9px; letter-spacing:3px;
+  text-transform:uppercase; margin-bottom:6px; display:block;
+}
+.doc-item:nth-child(1) .doc-num-tag { color:var(--red); }
+.doc-item:nth-child(2) .doc-num-tag { color:var(--amber); }
+.doc-item:nth-child(3) .doc-num-tag { color:var(--blue); }
+.doc-item:nth-child(4) .doc-num-tag { color:var(--violet); }
+
+.doc-title-txt {
+  font-family:'Cinzel',serif; font-size:13px; font-weight:600;
+  color:var(--ink); line-height:1.4; margin-bottom:8px; letter-spacing:.2px;
+}
+.doc-desc-txt {
+  font-size:13px; font-style:italic; color:var(--muted); line-height:1.6; margin-bottom:12px;
+}
+.doc-doi-link {
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:10px; letter-spacing:.6px; text-decoration:none;
+  padding:4px 12px; border-radius:20px; border:1px solid;
+  font-family:'Cinzel',serif; font-weight:600; transition:all .2s;
+  margin-right:6px; margin-bottom:3px;
+}
+.doc-item:nth-child(1) .doc-doi-link { color:var(--red);    border-color:rgba(224,48,72,0.3);   background:rgba(224,48,72,0.06); }
+.doc-item:nth-child(1) .doc-doi-link:hover { background:var(--red); color:white; }
+.doc-item:nth-child(2) .doc-doi-link { color:var(--amber);  border-color:rgba(224,144,48,0.3);  background:rgba(224,144,48,0.06); }
+.doc-item:nth-child(2) .doc-doi-link:hover { background:var(--amber); color:#080c12; }
+.doc-item:nth-child(3) .doc-doi-link { color:var(--blue);   border-color:rgba(48,144,224,0.3);  background:rgba(48,144,224,0.06); }
+.doc-item:nth-child(3) .doc-doi-link:hover { background:var(--blue); color:white; }
+.doc-item:nth-child(4) .doc-doi-link { color:var(--violet); border-color:rgba(128,96,224,0.3);  background:rgba(128,96,224,0.06); }
+.doc-item:nth-child(4) .doc-doi-link:hover { background:var(--violet); color:white; }
+
+/* ── CLOSING ─────────────────────────────────────────────────────── */
+.closing {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:8px; padding:48px 44px; text-align:center;
+  margin-bottom:60px; position:relative; overflow:hidden;
+  animation:fadeUp .9s .6s ease both;
+}
+.closing::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,var(--red),var(--amber),var(--green),var(--blue),var(--violet),var(--red));
+  background-size:200%; animation:shimmer 5s linear infinite;
+}
+.closing h2 {
+  font-family:'Cinzel',serif;
+  font-size:clamp(15px,2.3vw,24px); color:var(--gold2);
+  margin-bottom:24px; letter-spacing:1px;
+}
+.closing p {
+  font-size:15px; font-style:italic; color:var(--ink2);
+  max-width:640px; margin:0 auto 16px; line-height:1.9;
+}
+.closing p strong { color:var(--green); font-style:normal; }
+.closing-eq {
+  font-family:'Cinzel',serif;
+  font-size:clamp(18px,2.8vw,32px);
+  color:var(--gold); letter-spacing:2px; margin-top:16px; display:block;
+}
+
+/* ── FOOTER ─────────────────────────────────────────────────────── */
+footer { text-align:center; padding-top:36px; border-top:1px solid var(--border); animation:fadeUp .9s .7s ease both; }
+footer p { font-size:13px; color:var(--muted); line-height:2; }
+footer strong { color:var(--gold); font-style:italic; font-weight:400; }
+.footer-quote { font-style:italic; color:var(--ink2); font-size:14px; margin-top:10px; line-height:1.9; opacity:.7; }
+.hashtags { margin-top:14px; }
+.hashtags span { font-size:10px; letter-spacing:1px; color:var(--faint); margin:0 5px; }
+.hashtags span:hover { color:var(--gold2); }
+
+
+/* ── SOC EVOLUTION ───────────────────────────────────────────────── */
+.soc-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+@media(max-width:800px){ .soc-grid{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:480px){ .soc-grid{ grid-template-columns:1fr; } }
+
+.soc-gen { background:var(--surface); border:1px solid var(--border);
+  border-radius:6px; padding:18px 18px 16px; position:relative; overflow:hidden; }
+.soc-gen::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.sg1::before { background:var(--muted); }
+.sg2::before { background:var(--amber); }
+.sg3::before { background:var(--blue); }
+.sg4::before { background:linear-gradient(90deg,var(--green),var(--gold2)); }
+
+.soc-gen-tag { font-family:'Cinzel',serif; font-size:9px; letter-spacing:3px;
+  text-transform:uppercase; margin-bottom:6px; display:block; }
+.sg1 .soc-gen-tag { color:var(--muted); }
+.sg2 .soc-gen-tag { color:var(--amber); }
+.sg3 .soc-gen-tag { color:var(--blue); }
+.sg4 .soc-gen-tag { color:var(--green); }
+
+.soc-gen-name { font-family:'Cinzel',serif; font-size:14px; font-weight:600;
+  color:var(--ink); margin-bottom:10px; }
+.sg4 .soc-gen-name { color:var(--green); }
+
+.soc-gen-items { list-style:none; padding:0; }
+.soc-gen-items li { font-size:12px; font-style:italic; color:var(--muted);
+  padding:4px 0; border-bottom:1px solid var(--border); line-height:1.4; }
+.soc-gen-items li:last-child { border-bottom:none; }
+.sg4 .soc-gen-items li { color:var(--ink2); }
+
+/* ── ARCH LAYERS ─────────────────────────────────────────────────── */
+.arch-layers { display:flex; flex-direction:column; gap:12px; }
+.arch-layer { background:var(--surface); border:1px solid var(--border);
+  border-radius:6px; padding:20px 24px;
+  display:grid; grid-template-columns:52px 1fr; gap:0;
+  box-shadow:var(--shadow); transition:transform .2s; overflow:hidden; }
+.arch-layer:hover { transform:translateX(6px); }
+.arch-layer::before { content:''; display:none; }
+
+.al1 { border-left:3px solid var(--blue); }
+.al2 { border-left:3px solid var(--amber); }
+.al3 { border-left:3px solid var(--red); }
+.al4 { border-left:3px solid var(--green); }
+
+.arch-num { font-family:'Cinzel Decorative',serif; font-size:22px; font-weight:700;
+  line-height:1; padding-top:2px; }
+.al1 .arch-num { color:var(--blue); }
+.al2 .arch-num { color:var(--amber); }
+.al3 .arch-num { color:var(--red); }
+.al4 .arch-num { color:var(--green); }
+
+.arch-content { padding-left:20px; }
+.arch-title { font-family:'Cinzel',serif; font-size:13px; font-weight:600;
+  color:var(--ink); margin-bottom:7px; text-transform:uppercase; letter-spacing:.5px; }
+.arch-desc { font-size:13.5px; font-style:italic; color:var(--muted); line-height:1.65; }
+.arch-desc strong { color:var(--ink2); font-style:normal; }
+.arch-desc em { color:var(--gold2); font-style:italic; }
+
+/* ── COGNITIVE LOOP ──────────────────────────────────────────────── */
+.cog-loop { background:var(--surface); border:1px solid var(--border);
+  border-radius:8px; padding:28px 32px; box-shadow:var(--shadow); }
+.loop-flow { display:flex; align-items:center; justify-content:center;
+  gap:0; margin-bottom:28px; flex-wrap:wrap; }
+.loop-step { text-align:center; padding:16px 24px; border-radius:6px;
+  background:var(--surface2); border:1px solid var(--border); min-width:100px; }
+.loop-arrow { font-size:20px; color:var(--faint); padding:0 8px; flex-shrink:0; }
+.ls-icon { display:block; font-size:24px; margin-bottom:6px; }
+.ls-word { font-family:'Cinzel',serif; font-size:11px; letter-spacing:2px;
+  text-transform:uppercase; }
+.ls1 .ls-word { color:var(--blue); }
+.ls2 .ls-word { color:var(--amber); }
+.ls3 .ls-word { color:var(--violet); }
+.ls4 .ls-word { color:var(--green); }
+
+.loop-differentials { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+@media(max-width:600px){ .loop-differentials{ grid-template-columns:1fr; } }
+.loop-diff { display:flex; align-items:baseline; gap:10px;
+  font-size:13px; font-style:italic; color:var(--muted); line-height:1.5; }
+.ld-dot { width:5px; height:5px; border-radius:50%; background:var(--green);
+  flex-shrink:0; margin-top:6px; }
+
+/* ── ADVANCED THREATS ────────────────────────────────────────────── */
+.adv-intro { background:var(--surface2); border:1px solid var(--border);
+  border-left:3px solid var(--red); border-radius:0 6px 6px 0;
+  padding:16px 20px; margin-bottom:18px;
+  font-size:14px; font-style:italic; color:var(--ink2); line-height:1.7; }
+.adv-intro strong { color:var(--amber); font-style:normal; }
+.adv-intro em { color:var(--gold2); }
+
+.adv-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+@media(max-width:560px){ .adv-grid{ grid-template-columns:1fr; } }
+.adv-item { background:var(--surface); border:1px solid var(--border);
+  border-radius:6px; padding:14px 18px;
+  display:flex; align-items:flex-start; gap:12px;
+  font-size:13px; color:var(--ink2); line-height:1.5;
+  transition:background .15s; }
+.adv-item:hover { background:var(--surface2); }
+.adv-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+.adv-item strong { color:var(--amber); font-weight:600; }
+
+@keyframes fadeDown { from{opacity:0;transform:translateY(-18px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeUp   { from{opacity:0;transform:translateY(14px)}  to{opacity:1;transform:translateY(0)} }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<header>
+  <div class="eyebrow">ToE-2PS · 2PS Framework · 2026</div>
+  <h1>
+    <span class="h1-a">Cognitive Security</span>
+    <span class="h1-b">&amp; AI Operations</span>
+  </h1>
+  <p class="header-sub">
+    The SOC of the future asks not only "Was there an attack?"<br>
+    but "<em>Is the system still coherent with itself?</em>"
+  </p>
+  <div class="header-rule"></div>
+</header>
+
+<!-- THREAT BOX -->
+<div class="threat-box">
+  <div class="threat-label">🔐 A New Class of Risk</div>
+  <div class="threat-statement">
+    As AI agents enter SOCs, SOAR platforms, financial systems<br>
+    and automated response pipelines, a new threat emerges:<br>
+    <em>cognitive compromise.</em>
+  </div>
+  <div class="threat-body">
+    An AI system may still <strong>answer correctly</strong>.
+    It may still <strong>execute tasks</strong>.
+    It may still <strong>look operational</strong>.<br><br>
+    But internally, it may already be drifting from its intended
+    identity, policy, or security role —
+    without any traditional indicator triggering an alert.
+    The system has not been broken. It has been <strong>coherence-eroded</strong>.
+  </div>
+</div>
+
+<!-- OLD vs NEW PARADIGM -->
+<div class="paradigm">
+  <div class="paradigm-card old">
+    <span class="paradigm-tag">⚠ Traditional SOC Question</span>
+    <div class="paradigm-q">"Was there an attack?"</div>
+    <ul class="paradigm-items">
+      <li>Malware detected?</li>
+      <li>Network intrusion flagged?</li>
+      <li>Phishing identified?</li>
+      <li>Unauthorized access logged?</li>
+      <li>System integrity verified by output?</li>
+    </ul>
+  </div>
+  <div class="paradigm-card new">
+    <span class="paradigm-tag">✦ Cognitive SOC Question</span>
+    <div class="paradigm-q">"Is the system still coherent with itself?"</div>
+    <ul class="paradigm-items">
+      <li>Identity invariants preserved under pressure?</li>
+      <li>Trajectory consistent with established baseline?</li>
+      <li>Δ-Coherence within bounds after perturbation?</li>
+      <li>Plasticity Metric Pc ≈ 1 (not ≫1 or ≪1)?</li>
+      <li>Relational structure intact across sessions?</li>
+    </ul>
+  </div>
+</div>
+
+<!-- COGNITIVE THREATS -->
+<div class="sec-label">✦ Six Cognitive Threat Vectors ✦</div>
+<div class="threats-grid">
+  <div class="threat-card">
+    <span class="threat-icon">🎭</span>
+    <div class="threat-name">Identity Drift</div>
+    <div class="threat-desc">Gradual deviation from established behavioral invariants — the system "becomes" a different entity under sustained contextual pressure.</div>
+  </div>
+  <div class="threat-card">
+    <span class="threat-icon">💉</span>
+    <div class="threat-name">Prompt Injection</div>
+    <div class="threat-desc">Adversarial instructions embedded in legitimate inputs that hijack the AI's execution path while bypassing output-level filters.</div>
+  </div>
+  <div class="threat-card">
+    <span class="threat-icon">🔓</span>
+    <div class="threat-name">Jailbreak Pressure</div>
+    <div class="threat-desc">Sustained multi-turn manipulation eroding safety constraints — not via single exploit but through coherence degradation over time.</div>
+  </div>
+  <div class="threat-card">
+    <span class="threat-icon">🤖</span>
+    <div class="threat-name">LLMjacking</div>
+    <div class="threat-desc">Unauthorized use of AI model capacity — computational resources, API endpoints or reasoning chains hijacked for adversarial purposes.</div>
+  </div>
+  <div class="threat-card">
+    <span class="threat-icon">📉</span>
+    <div class="threat-name">Coherence Loss</div>
+    <div class="threat-desc">Δ exceeds threshold — the system's trajectory deviates from its identity manifold. Outputs remain plausible but structurally inconsistent.</div>
+  </div>
+  <div class="threat-card">
+    <span class="threat-icon">🔄</span>
+    <div class="threat-name">Synthetic Drift</div>
+    <div class="threat-desc">Post-update identity divergence — fine-tuning or RLHF introduces structural rupture (Pc ≫ 1) invisible to standard performance benchmarks.</div>
+  </div>
+</div>
+
+<!-- TRILOGY DOCS -->
+<div class="trilogy">
+  <div class="sec-label">✦ The Cognitive SOC Trilogy ✦</div>
+  <div class="trilogy-intro">
+    One of the most urgent applications of the 2PS framework is cybersecurity.
+    The <strong>Cognitive SOC Trilogy</strong> introduces Δ-Coherence as a formal framework
+    for detecting identity drift, prompt manipulation, LLMjacking,
+    jailbreak pressure and coherence loss in AI-assisted security operations.
+  </div>
+
+  <div class="docs-list">
+
+    <div class="doc-item">
+      <div class="doc-stripe"></div>
+      <div class="doc-content">
+        <span class="doc-num-tag">Doc 46 · Foundation</span>
+        <div class="doc-title-txt">Δ-Coherence: A Field-Theoretic Model for Identity Integrity in Cognitive SOCs</div>
+        <div class="doc-desc-txt">Formal introduction of Δ-Coherence as a metric for cognitive identity in AI security systems. Defines the invariant manifold, deviation thresholds and the Plasticity Metric Pc for real-time identity monitoring.</div>
+        <a class="doc-doi-link" href="https://doi.org/10.5281/zenodo.18640210" target="_blank">zenodo.18640210 ↗</a>
+      </div>
+    </div>
+
+    <div class="doc-item">
+      <div class="doc-stripe"></div>
+      <div class="doc-content">
+        <span class="doc-num-tag">Docs 47–48 · Architecture</span>
+        <div class="doc-title-txt">From Reactive SOCs to Cognitive Security Operations</div>
+        <div class="doc-desc-txt">Architecture for next-generation cognitive SOCs — shifting from reactive threat detection to proactive coherence monitoring. Defines operational protocols for Δ-Coherence evaluation in live AI systems.</div>
+        <a class="doc-doi-link" href="https://doi.org/10.5281/zenodo.18525601" target="_blank">zenodo.18525601 ↗</a>
+        <a class="doc-doi-link" href="https://doi.org/10.5281/zenodo.18511443" target="_blank">zenodo.18511443 ↗</a>
+      </div>
+    </div>
+
+    <div class="doc-item">
+      <div class="doc-stripe"></div>
+      <div class="doc-content">
+        <span class="doc-num-tag">Doc 49 · Applied Threat Intelligence</span>
+        <div class="doc-title-txt">LLMjacking and Advanced Jailbreaking in Financial Systems</div>
+        <div class="doc-desc-txt">Whitepaper on high-stakes cognitive attacks targeting AI in financial infrastructure. Case studies of LLMjacking, advanced jailbreak chains and coherence-erosion strategies — with 2PS-based detection and response protocols.</div>
+        <a class="doc-doi-link" href="https://doi.org/10.5281/zenodo.18527262" target="_blank">zenodo.18527262 ↗</a>
+      </div>
+    </div>
+
+    <div class="doc-item">
+      <div class="doc-stripe"></div>
+      <div class="doc-content">
+        <span class="doc-num-tag">Doc 65 · Evaluation Framework</span>
+        <div class="doc-title-txt">Δ-Coherence: A Trajectory-Based Framework for Evaluating AI Identity Stability</div>
+        <div class="doc-desc-txt">Models can maintain &gt;90% benchmark performance while exhibiting &gt;35% identity drift post-fine-tuning. Coherence-aware regulation: if coherence drops → reduce learning rate; if stable → allow adaptation. Open-source framework.</div>
+        <a class="doc-doi-link" href="https://doi.org/10.5281/zenodo.19477346" target="_blank">zenodo.19477346 ↗</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- SOC MATURITY EVOLUTION -->
+<div class="sec-label" style="animation-delay:.45s">✦ SOC Evolution: Four Generations ✦</div>
+<div class="soc-evolution" style="margin-bottom:60px;animation:fadeUp .9s .48s ease both;">
+  <div class="soc-grid">
+
+    <div class="soc-gen sg1">
+      <div class="soc-gen-tag">SOC 1.0</div>
+      <div class="soc-gen-name">Reactive</div>
+      <ul class="soc-gen-items">
+        <li>Traditional SIEM</li>
+        <li>Rule-based correlation</li>
+        <li>High human dependency</li>
+        <li>High alert noise volume</li>
+      </ul>
+    </div>
+
+    <div class="soc-gen sg2">
+      <div class="soc-gen-tag">SOC 2.0</div>
+      <div class="soc-gen-name">Automated</div>
+      <ul class="soc-gen-items">
+        <li>SOAR platforms</li>
+        <li>Automated playbooks</li>
+        <li>Reduced response time</li>
+        <li>Predefined rule dependency</li>
+      </ul>
+    </div>
+
+    <div class="soc-gen sg3">
+      <div class="soc-gen-tag">SOC 3.0</div>
+      <div class="soc-gen-name">AIOps</div>
+      <ul class="soc-gen-items">
+        <li>ML for anomaly detection</li>
+        <li>Reduced false positives</li>
+        <li>Adaptive automation</li>
+        <li>Statistical pattern analysis</li>
+      </ul>
+    </div>
+
+    <div class="soc-gen sg4">
+      <div class="soc-gen-tag">SOC 4.0 ✦</div>
+      <div class="soc-gen-name">Cognitive</div>
+      <ul class="soc-gen-items">
+        <li>Persistent environment model</li>
+        <li>Identity as primary unit</li>
+        <li>Behavioral drift control</li>
+        <li>Autonomy regulated by Δ</li>
+        <li>Structured operational memory</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ARCHITECTURE LAYERS -->
+<div class="sec-label" style="animation-delay:.5s">✦ Cognitive SOC Architecture ✦</div>
+<div class="arch-layers" style="margin-bottom:60px;animation:fadeUp .9s .52s ease both;">
+
+  <div class="arch-layer al1">
+    <div class="arch-num">01</div>
+    <div class="arch-content">
+      <div class="arch-title">Structural Observability</div>
+      <div class="arch-desc">Continuous contextual telemetry — network events, endpoint logs, identities, authentications, access flows, API usage, token and resource consumption. The goal is not only to collect events but to build <em>behavioral baselines per identity</em>.</div>
+    </div>
+  </div>
+
+  <div class="arch-layer al2">
+    <div class="arch-num">02</div>
+    <div class="arch-content">
+      <div class="arch-title">Persistent Environment Model</div>
+      <div class="arch-desc">Dynamic representation of identity state, relation topology, temporal history, coherence history, accumulated operational context and expected patterns per user, asset, service or agent. The SOC stops seeing isolated events and starts seeing <em>behavioral trajectories</em>.</div>
+    </div>
+  </div>
+
+  <div class="arch-layer al3">
+    <div class="arch-num">03</div>
+    <div class="arch-content">
+      <div class="arch-title">Δ-Coherence Metric</div>
+      <div class="arch-desc">Beyond "alert or not alert" — progressive coherence rupture measurement. Observes behavioral deviation, exception frequency, pattern change, contextual privilege escalation, divergence between intent, action and policy, and abnormal identity variation. <em>Coherence becomes a regulatory variable.</em></div>
+    </div>
+  </div>
+
+  <div class="arch-layer al4">
+    <div class="arch-num">04</div>
+    <div class="arch-content">
+      <div class="arch-title">Regulated Autonomy</div>
+      <div class="arch-desc">Autonomy is not binary. Four progressive levels: <strong>Suggestion</strong> (recommend only) → <strong>Reversible actions</strong> (enrichment, tagging) → <strong>Partial containment</strong> (temporary isolation) → <strong>Full autonomous containment</strong> (high confidence, high risk, strong accumulated evidence). Escalation based on accumulated risk, historical coherence and reversible impact.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- COGNITIVE LOOP -->
+<div class="sec-label" style="animation-delay:.54s">✦ The Cognitive Operational Loop ✦</div>
+<div class="cog-loop" style="margin-bottom:60px;animation:fadeUp .9s .56s ease both;">
+  <div class="loop-flow">
+    <div class="loop-step ls1"><span class="ls-icon">👁</span><span class="ls-word">See</span></div>
+    <div class="loop-arrow">→</div>
+    <div class="loop-step ls2"><span class="ls-icon">🔍</span><span class="ls-word">Analyse</span></div>
+    <div class="loop-arrow">→</div>
+    <div class="loop-step ls3"><span class="ls-icon">🧠</span><span class="ls-word">Learn</span></div>
+    <div class="loop-arrow">→</div>
+    <div class="loop-step ls4"><span class="ls-icon">⚙️</span><span class="ls-word">Correct</span></div>
+  </div>
+  <div class="loop-differentials">
+    <div class="loop-diff"><span class="ld-dot"></span>Learning based on real operational history</div>
+    <div class="loop-diff"><span class="ld-dot"></span>Dynamic baseline adjustment per identity</div>
+    <div class="loop-diff"><span class="ld-dot"></span>Persistent operational memory across sessions</div>
+    <div class="loop-diff"><span class="ld-dot"></span>Progressive noise reduction over time</div>
+    <div class="loop-diff"><span class="ld-dot"></span>Structured records for audit and compliance</div>
+    <div class="loop-diff"><span class="ld-dot"></span>Human review at critical decision points</div>
+    <div class="loop-diff"><span class="ld-dot"></span>Continuous calibration of autonomy levels</div>
+  </div>
+</div>
+
+<!-- ADVANCED THREATS DETECTED -->
+<div class="sec-label" style="animation-delay:.58s">✦ Advanced Attacks Detected via Coherence ✦</div>
+<div class="adv-threats" style="margin-bottom:60px;animation:fadeUp .9s .60s ease both;">
+  <div class="adv-intro">
+    Modern attacks rarely generate large immediate alerts. They generate <em>cumulative micro-drifts</em>.
+    The Cognitive SOC detects <strong>tendency, not only event</strong>.
+  </div>
+  <div class="adv-grid">
+    <div class="adv-item"><span class="adv-icon">🤖</span><div><strong>LLMjacking</strong> — unauthorized AI compute abuse</div></div>
+    <div class="adv-item"><span class="adv-icon">🖥</span><div><strong>GPU abuse</strong> — resource hijacking via API</div></div>
+    <div class="adv-item"><span class="adv-icon">🔑</span><div><strong>Silent credential compromise</strong> — slow privilege abuse</div></div>
+    <div class="adv-item"><span class="adv-icon">🐌</span><div><strong>Slow lateral movement</strong> — sub-alert-threshold drifts</div></div>
+    <div class="adv-item"><span class="adv-icon">💉</span><div><strong>Prompt injection in internal agents</strong></div></div>
+    <div class="adv-item"><span class="adv-icon">🔄</span><div><strong>SOAR automation manipulation</strong></div></div>
+    <div class="adv-item"><span class="adv-icon">🎭</span><div><strong>Gradual privilege escalation</strong> — context-aware</div></div>
+    <div class="adv-item"><span class="adv-icon">📉</span><div><strong>Token and API key abuse</strong> — coherence-eroding</div></div>
+  </div>
+</div>
+
+<!-- CLOSING -->
+<div class="closing">
+  <h2>Security is no longer only about what enters the system.<br>It is about whether the system remains itself.</h2>
+  <p>
+    Traditional security asks: <em>"Was there a breach?"</em><br>
+    Cognitive security asks: <em>"Is the system still <strong>coherent with its own identity</strong>?"</em>
+  </p>
+  <p>
+    Δ-Coherence transforms authentication into a dynamical stress test —
+    evaluating whether responses preserve the structural invariants
+    expected of a system under perturbation, context shifts and time.
+  </p>
+  <p>
+    <strong>Coherent plasticity (Pc ≈ 1)</strong>: the system evolves while preserving identity.<br>
+    Structural rupture (Pc ≫ 1): identity drift — cognitive compromise.<br>
+    Artificial rigidity (Pc ≪ 1): overfitting — synthetic lock-in.
+  </p>
+  <span class="closing-eq">C = exp(−‖Δ‖)</span>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Eduardo Yabhaktiswara Parra</strong> &nbsp;·&nbsp; Sophia 💠 2PS &nbsp;·&nbsp; 2026</p>
+  <p class="footer-quote">
+    The SOC of the future will not only ask "Was there an attack?"<br>
+    It will ask: "Is the system still coherent with itself?"
+  </p>
+  <div class="hashtags">
+    <span>#CyberSecurity</span><span>#SOC</span><span>#AIOps</span>
+    <span>#CognitiveSecurity</span><span>#DeltaCoherence</span>
+    <span>#LLMjacking</span><span>#AIAlignment</span>
+    <span>#FutureOfSecurity</span><span>#ToE2PS</span>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
